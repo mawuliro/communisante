@@ -1,0 +1,444 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-10 01:24+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: accounts/admin.py:32 accounts/admin.py:38
+msgid "Health Worker Information"
+msgstr ""
+
+#: accounts/models.py:17
+msgid "Community Health Worker"
+msgstr ""
+
+#: accounts/models.py:18
+msgid "District Supervisor"
+msgstr ""
+
+#: accounts/models.py:19
+msgid "System Administrator"
+msgstr ""
+
+#: accounts/models.py:26
+msgid "role"
+msgstr ""
+
+#: accounts/models.py:31
+msgid "phone number"
+msgstr ""
+
+#: accounts/models.py:34
+msgid "English"
+msgstr ""
+
+#: accounts/models.py:35
+msgid "French"
+msgstr ""
+
+#: accounts/models.py:41
+msgid "preferred language"
+msgstr ""
+
+#: accounts/models.py:45 accounts/models.py:97
+msgid "user"
+msgstr ""
+
+#: accounts/models.py:46
+msgid "users"
+msgstr ""
+
+#: accounts/models.py:70
+msgid "district name"
+msgstr ""
+
+#: accounts/models.py:71
+msgid "region"
+msgstr ""
+
+#: accounts/models.py:78
+msgid "supervisor"
+msgstr ""
+
+#: accounts/models.py:82 accounts/models.py:103
+msgid "district"
+msgstr ""
+
+#: accounts/models.py:83
+msgid "districts"
+msgstr ""
+
+#: accounts/models.py:108
+msgid "contact phone"
+msgstr ""
+
+#: accounts/models.py:110 maternal/models.py:47 triage/models.py:20
+#: triage/models.py:43
+msgid "active"
+msgstr ""
+
+#: accounts/models.py:113
+msgid "health worker"
+msgstr ""
+
+#: accounts/models.py:114
+msgid "health workers"
+msgstr ""
+
+#: alerts/models.py:17
+msgid "Missed visit"
+msgstr ""
+
+#: alerts/models.py:18
+msgid "Danger sign"
+msgstr ""
+
+#: alerts/models.py:19
+msgid "High risk"
+msgstr ""
+
+#: alerts/models.py:22 maternal/models.py:26
+msgid "Low"
+msgstr ""
+
+#: alerts/models.py:23 maternal/models.py:27
+msgid "Medium"
+msgstr ""
+
+#: alerts/models.py:24 maternal/models.py:28
+msgid "High"
+msgstr ""
+
+#: alerts/models.py:25
+msgid "Critical"
+msgstr ""
+
+#: alerts/models.py:30
+msgid "alert type"
+msgstr ""
+
+#: alerts/models.py:36
+msgid "related patient"
+msgstr ""
+
+#: alerts/models.py:44
+msgid "related pregnancy"
+msgstr ""
+
+#: alerts/models.py:49
+msgid "severity"
+msgstr ""
+
+#: alerts/models.py:51
+msgid "resolved"
+msgstr ""
+
+#: alerts/models.py:58
+msgid "resolved by"
+msgstr ""
+
+#: alerts/models.py:60
+msgid "resolved at"
+msgstr ""
+
+#: alerts/models.py:61 patients/models.py:35
+msgid "created at"
+msgstr ""
+
+#: alerts/models.py:62 maternal/models.py:103
+msgid "notes"
+msgstr ""
+
+#: alerts/models.py:65
+msgid "alert"
+msgstr ""
+
+#: alerts/models.py:66
+msgid "alerts"
+msgstr ""
+
+#: alerts/models.py:74
+#, python-format
+msgid "%(type)s — %(patient)s"
+msgstr ""
+
+#: maternal/models.py:34 patients/models.py:38 triage/models.py:109
+msgid "patient"
+msgstr ""
+
+#: maternal/models.py:36
+msgid "last menstrual period"
+msgstr ""
+
+#: maternal/models.py:39
+msgid "expected delivery date"
+msgstr ""
+
+#: maternal/models.py:45
+msgid "risk level"
+msgstr ""
+
+#: maternal/models.py:50
+msgid "pregnancy record"
+msgstr ""
+
+#: maternal/models.py:51
+msgid "pregnancy records"
+msgstr ""
+
+#: maternal/models.py:59
+#, python-format
+msgid "Pregnancy for %(patient)s (EDD %(edd)s)"
+msgstr ""
+
+#: maternal/models.py:66
+msgid "LMP is required."
+msgstr ""
+
+#: maternal/models.py:82
+msgid "pregnancy"
+msgstr ""
+
+#: maternal/models.py:84
+msgid "visit date"
+msgstr ""
+
+#: maternal/models.py:88
+msgid "blood pressure (systolic)"
+msgstr ""
+
+#: maternal/models.py:93
+msgid "blood pressure (diastolic)"
+msgstr ""
+
+#: maternal/models.py:100
+msgid "weight (kg)"
+msgstr ""
+
+#: maternal/models.py:102
+msgid "symptoms noted"
+msgstr ""
+
+#: maternal/models.py:108
+msgid "recorded by"
+msgstr ""
+
+#: maternal/models.py:112
+msgid "prenatal visit"
+msgstr ""
+
+#: maternal/models.py:113
+msgid "prenatal visits"
+msgstr ""
+
+#: maternal/models.py:121
+#, python-format
+msgid "Visit on %(date)s — %(patient)s"
+msgstr ""
+
+#: patients/models.py:15
+msgid "Female"
+msgstr ""
+
+#: patients/models.py:16
+msgid "Male"
+msgstr ""
+
+#: patients/models.py:17
+msgid "Other / prefer not to say"
+msgstr ""
+
+#: patients/models.py:19
+msgid "first name"
+msgstr ""
+
+#: patients/models.py:20
+msgid "last name"
+msgstr ""
+
+#: patients/models.py:21
+msgid "age"
+msgstr ""
+
+#: patients/models.py:26
+msgid "sex"
+msgstr ""
+
+#: patients/models.py:28
+msgid "village"
+msgstr ""
+
+#: patients/models.py:33
+msgid "assigned CHW"
+msgstr ""
+
+#: patients/models.py:39
+msgid "patients"
+msgstr ""
+
+#: templates/base.html:7 templates/base.html:14 templates/core/home.html:6
+msgid "CommuniSanté"
+msgstr ""
+
+#: templates/base.html:18
+msgid "Admin"
+msgstr ""
+
+#: templates/base.html:23
+msgid "Language"
+msgstr ""
+
+#: templates/base.html:34
+msgid "OK"
+msgstr ""
+
+#: templates/base.html:46
+msgid "Community health platform — offline-first"
+msgstr ""
+
+#: templates/core/home.html:8
+msgid "Lightweight tools for community health workers in rural West Africa."
+msgstr ""
+
+#: templates/core/home.html:13
+msgid "Open admin"
+msgstr ""
+
+#: triage/models.py:17
+msgid "protocol name"
+msgstr ""
+
+#: triage/models.py:18
+msgid "description"
+msgstr ""
+
+#: triage/models.py:19
+msgid "version"
+msgstr ""
+
+#: triage/models.py:23
+msgid "symptom protocol"
+msgstr ""
+
+#: triage/models.py:24
+msgid "symptom protocols"
+msgstr ""
+
+#: triage/models.py:38 triage/models.py:69
+msgid "protocol"
+msgstr ""
+
+#: triage/models.py:40
+msgid "symptom name"
+msgstr ""
+
+#: triage/models.py:41
+msgid "severity weight"
+msgstr ""
+
+#: triage/models.py:42
+msgid "category"
+msgstr ""
+
+#: triage/models.py:46
+msgid "symptom"
+msgstr ""
+
+#: triage/models.py:47
+msgid "symptoms"
+msgstr ""
+
+#: triage/models.py:61
+msgid "Urgent referral"
+msgstr ""
+
+#: triage/models.py:62
+msgid "Basic treatment"
+msgstr ""
+
+#: triage/models.py:63
+msgid "Monitoring"
+msgstr ""
+
+#: triage/models.py:71
+msgid "minimum score"
+msgstr ""
+
+#: triage/models.py:72
+msgid "maximum score"
+msgstr ""
+
+#: triage/models.py:76
+msgid "recommendation"
+msgstr ""
+
+#: triage/models.py:78
+msgid "explanation"
+msgstr ""
+
+#: triage/models.py:79
+msgid "next steps"
+msgstr ""
+
+#: triage/models.py:82
+msgid "triage rule"
+msgstr ""
+
+#: triage/models.py:83
+msgid "triage rules"
+msgstr ""
+
+#: triage/models.py:90
+#, python-format
+msgid "%(rec)s for %(protocol)s (%(min)s–%(max)s)"
+msgstr ""
+
+#: triage/models.py:99
+msgid "Minimum score cannot exceed maximum score."
+msgstr ""
+
+#: triage/models.py:114
+msgid "symptoms selected"
+msgstr ""
+
+#: triage/models.py:116
+msgid "score"
+msgstr ""
+
+#: triage/models.py:120
+msgid "recommendation given"
+msgstr ""
+
+#: triage/models.py:122
+msgid "date"
+msgstr ""
+
+#: triage/models.py:127
+msgid "performed by"
+msgstr ""
+
+#: triage/models.py:131
+msgid "symptom check"
+msgstr ""
+
+#: triage/models.py:132
+msgid "symptom checks"
+msgstr ""
+
+#: triage/models.py:140
+#, python-format
+msgid "Check for %(patient)s on %(date)s"
+msgstr ""

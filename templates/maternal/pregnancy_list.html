@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Pregnancies" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Pregnancies" %}</h1>
+        {% if can_manage_maternal %}
+            <a href="{% url 'maternal:pregnancy_create' %}"
+               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+                {% trans "New pregnancy" %}
+            </a>
+        {% endif %}
+    </div>
+
+    <form method="get" class="flex flex-wrap gap-2 items-center text-sm">
+        <span class="text-slate-600">{% trans "Filter" %}:</span>
+        <a href="{% url 'maternal:pregnancy_list' %}" class="px-3 py-2 rounded-lg border {% if not filter_active %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "All" %}</a>
+        <a href="?active=1" class="px-3 py-2 rounded-lg border {% if filter_active == '1' %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "Active only" %}</a>
+        <a href="?active=0" class="px-3 py-2 rounded-lg border {% if filter_active == '0' %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "Closed" %}</a>
+    </form>
+
+    {% if pregnancies %}
+        <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+            {% for pr in pregnancies %}
+                <li>
+                    <a href="{% url 'maternal:pregnancy_detail' pr.pk %}" class="block min-h-[56px] px-4 py-3 hover:bg-slate-50">
+                        <div class="font-medium text-slate-900">{{ pr.patient.first_name }} {{ pr.patient.last_name }}</div>
+                        <div class="text-sm text-slate-600 mt-1">
+                            {% trans "EDD" %}: {{ pr.expected_delivery_date }}
+                            · {% trans "Risk" %}: {{ pr.get_risk_level_display }}
+                            {% if not pr.is_active %}
+                                <span class="text-amber-800"> · {% trans "Closed" %}</span>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if is_paginated %}
+            <nav class="flex justify-between text-sm">
+                {% if page_obj.has_previous %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.previous_page_number }}{% if filter_active %}&active={{ filter_active }}{% endif %}">{% trans "Previous" %}</a>
+                {% else %}<span></span>{% endif %}
+                {% if page_obj.has_next %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.next_page_number }}{% if filter_active %}&active={{ filter_active }}{% endif %}">{% trans "Next" %}</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <p class="text-slate-600">{% trans "No pregnancy records yet." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

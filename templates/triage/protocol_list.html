@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Triage" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Symptom triage" %}</h1>
+    <p class="text-slate-600">{% trans "Choose a protocol, then select a patient." %}</p>
+
+    {% if not can_run_triage %}
+        <p class="rounded-md bg-amber-50 text-amber-900 px-4 py-3 text-sm">
+            {% trans "Your account needs an active community health worker profile to save a triage session. Supervisors can still review records in the admin." %}
+        </p>
+    {% endif %}
+
+    {% if protocols %}
+        <ul class="space-y-3">
+            {% for p in protocols %}
+                <li class="rounded-lg border border-slate-200 bg-white shadow-sm">
+                    <div class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                        <div>
+                            <div class="font-semibold text-slate-900">{{ p.name }}</div>
+                            {% if p.description %}
+                                <p class="text-sm text-slate-600 mt-1">{{ p.description }}</p>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'triage:pick_patient' protocol_pk=p.pk %}"
+                           class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 shrink-0">
+                            {% trans "Continue" %}
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-slate-600">
+            {% trans "No active protocols yet. Run load_demo_triage or add one in the admin." %}
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Alerts" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Alerts" %}</h1>
+
+    <form method="get" class="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end text-sm">
+        <div>
+            <label for="status" class="block text-slate-600 mb-1">{% trans "Status" %}</label>
+            <select id="status" name="status" class="min-h-[44px] rounded-lg border border-slate-300 px-2 text-slate-900">
+                <option value="" {% if not filter_status %}selected{% endif %}>{% trans "All" %}</option>
+                <option value="open" {% if filter_status == 'open' %}selected{% endif %}>{% trans "Open" %}</option>
+                <option value="done" {% if filter_status == 'done' %}selected{% endif %}>{% trans "Resolved" %}</option>
+            </select>
+        </div>
+        <div>
+            <label for="severity" class="block text-slate-600 mb-1">{% trans "Severity" %}</label>
+            <select id="severity" name="severity" class="min-h-[44px] rounded-lg border border-slate-300 px-2 text-slate-900">
+                <option value="">{% trans "All" %}</option>
+                {% for val, label in severity_choices %}
+                    <option value="{{ val }}" {% if filter_severity == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="type" class="block text-slate-600 mb-1">{% trans "Type" %}</label>
+            <select id="type" name="type" class="min-h-[44px] rounded-lg border border-slate-300 px-2 text-slate-900">
+                <option value="">{% trans "All" %}</option>
+                {% for val, label in type_choices %}
+                    <option value="{{ val }}" {% if filter_type == val %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="min-h-[44px] px-4 rounded-lg bg-slate-800 text-white font-medium">{% trans "Apply" %}</button>
+    </form>
+
+    {% if alerts %}
+        <ul class="space-y-3">
+            {% for a in alerts %}
+                <li class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
+                        <div>
+                            <div class="font-semibold text-slate-900">{{ a.get_type_display }}</div>
+                            <div class="text-sm text-slate-600 mt-1">
+                                <a href="{% url 'patients:detail' a.related_patient_id %}" class="text-emerald-700 underline">{{ a.related_patient.first_name }} {{ a.related_patient.last_name }}</a>
+                                {% if a.related_pregnancy_id %}
+                                    · <a href="{% url 'maternal:pregnancy_detail' a.related_pregnancy_id %}" class="text-emerald-700 underline">{% trans "Pregnancy" %}</a>
+                                {% endif %}
+                            </div>
+                            <div class="text-xs text-slate-500 mt-1">{{ a.get_severity_display }} · {{ a.created_at|date:"SHORT_DATETIME_FORMAT" }}</div>
+                            {% if a.resolved %}
+                                <div class="text-sm text-emerald-800 mt-2">{% trans "Resolved" %} {% if a.resolved_at %}· {{ a.resolved_at|date:"SHORT_DATETIME_FORMAT" }}{% endif %}</div>
+                            {% endif %}
+                        </div>
+                        {% if not a.resolved %}
+                            <form method="post" action="{% url 'alerts:resolve' a.pk %}" class="shrink-0 space-y-2">
+                                {% csrf_token %}
+                                <label for="notes-{{ a.pk }}" class="sr-only">{% trans "Notes" %}</label>
+                                <textarea id="notes-{{ a.pk }}" name="notes" rows="2" class="w-full max-w-xs rounded border border-slate-300 px-2 py-1 text-sm" placeholder="{% trans 'Optional note' %}"></textarea>
+                                <button type="submit" class="w-full sm:w-auto min-h-[44px] px-4 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+                                    {% trans "Mark resolved" %}
+                                </button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        {% if is_paginated %}
+            <nav class="flex justify-between text-sm">
+                {% if page_obj.has_previous %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.previous_page_number }}&status={{ filter_status }}&severity={{ filter_severity }}&type={{ filter_type }}">{% trans "Previous" %}</a>
+                {% else %}<span></span>{% endif %}
+                {% if page_obj.has_next %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.next_page_number }}&status={{ filter_status }}&severity={{ filter_severity }}&type={{ filter_type }}">{% trans "Next" %}</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <p class="text-slate-600">{% trans "No alerts in this view." %}</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,2 @@
+release: python manage.py migrate --settings=communisante.settings.prod && python manage.py collectstatic --noinput --settings=communisante.settings.prod
+web: gunicorn communisante.wsgi:application --bind 0.0.0.0:$PORT --workers 2

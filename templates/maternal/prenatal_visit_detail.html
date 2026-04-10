@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Prenatal visit" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Prenatal visit" %}</h1>
+
+    {% if bp_alert %}
+        <div class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-950 text-sm" role="alert">
+            <p class="font-semibold">{% trans "Elevated blood pressure" %}</p>
+            <p class="mt-1">{% trans "Consider urgent assessment or referral according to your district protocol." %}</p>
+        </div>
+    {% endif %}
+
+    <div class="rounded-lg border border-slate-200 bg-white shadow-sm p-5 space-y-3 text-slate-800">
+        <div><span class="font-medium text-slate-700">{% trans "Date" %}:</span> {{ visit.date }}</div>
+        <div><span class="font-medium text-slate-700">{% trans "Patient" %}:</span>
+            <a href="{% url 'patients:detail' visit.pregnancy.patient_id %}" class="text-emerald-700 underline">{{ visit.pregnancy.patient.first_name }} {{ visit.pregnancy.patient.last_name }}</a>
+            · <a href="{% url 'maternal:pregnancy_detail' visit.pregnancy_id %}" class="text-emerald-700 underline">{% trans "Pregnancy" %}</a>
+        </div>
+        <div><span class="font-medium text-slate-700">{% trans "Recorded by" %}:</span> {{ visit.recorded_by }}</div>
+        <div>
+            <span class="font-medium text-slate-700">{% trans "Blood pressure" %}:</span>
+            {% if visit.blood_pressure_systolic %}{{ visit.blood_pressure_systolic }}{% else %}{% trans "not set" %}{% endif %}
+            /
+            {% if visit.blood_pressure_diastolic %}{{ visit.blood_pressure_diastolic }}{% else %}{% trans "not set" %}{% endif %}
+        </div>
+        {% if visit.weight_kg %}
+            <div><span class="font-medium text-slate-700">{% trans "Weight" %}:</span> {{ visit.weight_kg }} {% trans "kg" %}</div>
+        {% endif %}
+        {% if visit.symptoms_noted %}
+            <div>
+                <span class="font-medium text-slate-700">{% trans "Symptoms" %}:</span>
+                <p class="mt-1 whitespace-pre-wrap">{{ visit.symptoms_noted }}</p>
+            </div>
+        {% endif %}
+        {% if visit.notes %}
+            <div>
+                <span class="font-medium text-slate-700">{% trans "Notes" %}:</span>
+                <p class="mt-1 whitespace-pre-wrap">{{ visit.notes }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'maternal:pregnancy_detail' visit.pregnancy_id %}"
+       class="inline-flex justify-center items-center min-h-[48px] px-6 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">
+        {% trans "Back to pregnancy" %}
+    </a>
+</div>
+{% endblock %}

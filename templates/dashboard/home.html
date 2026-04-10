@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Dashboard" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Dashboard" %}</h1>
+
+    {% if dashboard_role == 'chw' %}
+        <p class="text-slate-600">{% trans "Welcome" %}, {{ hw }}.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href="{% url 'patients:list' %}" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
+                <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Patients" %}</div>
+            </a>
+            <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
+                <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+            </a>
+            <a href="{% url 'maternal:pregnancy_list' %}?active=1" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
+                <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+            </a>
+            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="text-3xl font-bold text-slate-800">{{ recent_patient_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "New patients (7 days)" %}</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="{% url 'patients:create' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">{% trans "Register patient" %}</a>
+            <a href="{% url 'triage:protocol_list' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">{% trans "Triage" %}</a>
+        </div>
+
+    {% elif dashboard_role == 'supervisor' %}
+        <p class="text-slate-600">{% trans "Supervisor overview for your districts." %}</p>
+        {% if not districts %}
+            <p class="rounded-md bg-amber-50 text-amber-950 px-4 py-3 text-sm">{% trans "No district is linked to your account yet. Ask an administrator to assign you as supervisor on a district." %}</p>
+        {% else %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
+                    <div class="text-slate-700 font-medium">{% trans "Patients in scope" %}</div>
+                </div>
+                <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
+                    <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
+                    <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+                </a>
+                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="text-3xl font-bold text-slate-800">{{ chw_count }}</div>
+                    <div class="text-slate-700 font-medium">{% trans "Active CHWs" %}</div>
+                </div>
+                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                    <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
+                    <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+                </div>
+            </div>
+            <p class="text-sm text-slate-600">{% trans "New patients in the last 7 days" %}: <span class="font-semibold">{{ recent_patient_count }}</span></p>
+
+            <h2 class="text-lg font-semibold text-slate-900">{% trans "By district" %}</h2>
+            <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+                <table class="min-w-full text-sm text-left">
+                    <thead class="bg-slate-100 text-slate-700">
+                        <tr>
+                            <th class="px-4 py-3">{% trans "District" %}</th>
+                            <th class="px-4 py-3">{% trans "CHWs" %}</th>
+                            <th class="px-4 py-3">{% trans "Patients" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in district_rows %}
+                            <tr class="border-t border-slate-200">
+                                <td class="px-4 py-3 font-medium">{{ row.district.name }}</td>
+                                <td class="px-4 py-3">{{ row.chw_count }}</td>
+                                <td class="px-4 py-3">{{ row.patient_count }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+    {% elif dashboard_role == 'admin' %}
+        <p class="text-slate-600">{% trans "Administrator overview." %}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Patients" %}</div>
+            </div>
+            <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
+                <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+            </a>
+            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="text-3xl font-bold text-slate-800">{{ chw_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Active CHWs" %}</div>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="text-3xl font-bold text-slate-800">{{ district_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Districts" %}</div>
+            </div>
+            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
+                <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+            </div>
+        </div>
+
+    {% else %}
+        <p class="text-slate-600">{% trans "Your account does not have a dashboard role yet. Use the admin site or ask for a CHW or supervisor profile." %}</p>
+        <a href="{% url 'admin:index' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">{% trans "Open admin" %}</a>
+    {% endif %}
+</div>
+{% endblock %}

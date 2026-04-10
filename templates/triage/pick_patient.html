@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Choose patient" %} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+    <div>
+        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Choose a patient" %}</h1>
+        <p class="text-slate-600 mt-1">{{ protocol.name }}</p>
+    </div>
+
+    {% if not can_run_triage %}
+        <p class="rounded-md bg-amber-50 text-amber-900 px-4 py-3 text-sm">
+            {% trans "You need an active community health worker profile to open the checklist." %}
+        </p>
+    {% endif %}
+
+    {% if patients %}
+        <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+            {% for p in patients %}
+                <li>
+                    {% if can_run_triage %}
+                        <a href="{% url 'triage:session' protocol_pk=protocol.pk patient_pk=p.pk %}"
+                           class="block min-h-[52px] px-4 py-3 hover:bg-slate-50">
+                            <span class="font-medium text-slate-900">{{ p.first_name }} {{ p.last_name }}</span>
+                            {% if p.village %}
+                                <span class="text-slate-600 text-sm"> · {{ p.village }}</span>
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        <div class="block min-h-[52px] px-4 py-3 text-slate-500">
+                            <span class="font-medium">{{ p.first_name }} {{ p.last_name }}</span>
+                        </div>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% if is_paginated %}
+            <nav class="flex justify-between text-sm">
+                {% if page_obj.has_previous %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.previous_page_number }}">{% trans "Previous" %}</a>
+                {% else %}
+                    <span></span>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a class="text-emerald-700 underline" href="?page={{ page_obj.next_page_number }}">{% trans "Next" %}</a>
+                {% endif %}
+            </nav>
+        {% endif %}
+    {% else %}
+        <p class="text-slate-600">{% trans "No patients available. Register a patient first." %}</p>
+    {% endif %}
+
+    <a href="{% url 'triage:protocol_list' %}" class="inline-block text-emerald-700 underline text-sm">{% trans "Back to protocols" %}</a>
+</div>
+{% endblock %}
