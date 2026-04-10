@@ -8,14 +8,14 @@ from .base import *
 # Override for development
 DEBUG = True
 
-# Broad hosts for local + LAN testing (phones on the same Wi‑Fi)
-ALLOWED_HOSTS = ['*']
+# Allow all hosts in development
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 # SQLite is already configured in base.py - no changes needed
 
-# Django Debug Toolbar (after SecurityMiddleware — required by the toolbar docs)
+# Django Debug Toolbar
 INSTALLED_APPS += ['debug_toolbar']
-MIDDLEWARE.insert(1, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 INTERNAL_IPS = ['127.0.0.1']
 
 # Email to console (no actual emails sent)
