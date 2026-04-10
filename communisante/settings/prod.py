@@ -53,8 +53,13 @@ SECURE_HSTS_SECONDS = 31536000  # 1 year
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
-# Static files - WhiteNoise handles them
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Static files — WhiteNoise (no manifest backend: avoids admin CSS 404s if manifest/build drift)
+STORAGES = {
+    **STORAGES,
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
+    },
+}
 
 # Email (configure for production - use SendGrid or similar)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
