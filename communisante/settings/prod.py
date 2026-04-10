@@ -30,6 +30,11 @@ if _railway_public:
         _csrf.append(_origin)
 CSRF_TRUSTED_ORIGINS = _csrf
 
+# Railway (and similar) terminate TLS; the app sees HTTP unless we trust the proxy.
+# Without this, SECURE_SSL_REDIRECT loops forever (browser HTTPS → edge → app HTTP → redirect to HTTPS).
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+
 # Database - PostgreSQL (from Railway's DATABASE_URL)
 DATABASES = {
     'default': env.db(),
