@@ -1,8 +1,7 @@
 # Config as code — overrides dashboard settings. See:
 # https://docs.railway.com/config-as-code/reference
 #
-# - collectstatic runs at BUILD only (baked into the image). Running it again on
-#   every container start adds several seconds and delays the healthcheck.
+# - collectstatic runs at BUILD only (baked into the image).
 # - Do not run collectstatic in Railway pre-deploy (ephemeral FS, not kept).
 # - Heroku-style Procfile `release:` is not a reliable migration hook on Railway;
 #   use preDeployCommand for migrate (DB only, no FS needed).
@@ -15,4 +14,5 @@ buildCommand = "pip install -r requirements.txt && python manage.py collectstati
 startCommand = "python -m gunicorn communisante.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120 --preload"
 # Railway allows at most one element (one shell command), not argv-style tokens.
 preDeployCommand = ["python manage.py migrate --noinput --settings=communisante.settings.prod"]
-healthcheckPath = "/health/"
+# No HTTP healthcheck: avoids deploy failures if /health/ misbehaves. Clear "Healthcheck Path"
+# in Railway → Service → Settings if an old value is still applied from the dashboard.
