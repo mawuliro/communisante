@@ -12,7 +12,8 @@
             · {% trans "EDD" %} {{ pregnancy.expected_delivery_date }}
         </p>
     </div>
-    <form method="post" novalidate class="space-y-4">
+    <form method="post" novalidate class="space-y-4"
+          data-offline-kind="prenatal_visit_create" data-offline-pregnancy-pk="{{ pregnancy.pk }}">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="flex flex-col sm:flex-row gap-3 pt-2">

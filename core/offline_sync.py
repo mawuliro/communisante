@@ -13,6 +13,8 @@ from django.http import HttpRequest, JsonResponse
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from maternal.access import pregnancy_queryset_for_user
+from maternal.forms import PregnancyForm, PrenatalVisitForm
 from patients.access import patient_queryset_for_user, user_can_manage_patients
 from patients.forms import PatientForm
 from triage.services import save_symptom_check_from_triage
@@ -52,6 +54,58 @@ def _patient_update(user: User, payload: dict[str, Any]) -> dict[str, Any]:
     return {'ok': False, 'error': _('Validation failed.'), 'field_errors': form.errors.get_json_data()}
 
 
+def _pregnancy_create(user: User, payload: dict[str, Any]) -> dict[str, Any]:
+    if not user_can_manage_patients(user):
+        return {'ok': False, 'error': _('You do not have permission to add or change pregnancy records.')}
+    data = {k: v for k, v in payload.items() if k != 'kind'}
+    form = PregnancyForm(data=data, user=user)
+    if form.is_valid():
+        pregnancy = form.save()
+        return {'ok': True, 'pregnancy_id': pregnancy.pk}
+    return {'ok': False, 'error': _('Validation failed.'), 'field_errors': form.errors.get_json_data()}
+
+
+def _pregnancy_update(user: User, payload: dict[str, Any]) -> dict[str, Any]:
+    if not user_can_manage_patients(user):
+        return {'ok': False, 'error': _('You do not have permission to add or change pregnancy records.')}
+    pk = payload.get('pregnancy_pk')
+    if pk is None:
+        return {'ok': False, 'error': _('Missing pregnancy_pk.')}
+    try:
+        pk = int(pk)
+    except (TypeError, ValueError):
+        return {'ok': False, 'error': _('Invalid pregnancy_pk.')}
+    pregnancy = pregnancy_queryset_for_user(user).filter(pk=pk).first()
+    if pregnancy is None:
+        return {'ok': False, 'error': _('Pregnancy not found or not accessible.')}
+    data = {k: v for k, v in payload.items() if k not in ('kind', 'pregnancy_pk')}
+    form = PregnancyForm(data=data, instance=pregnancy, user=user)
+    if form.is_valid():
+        form.save()
+        return {'ok': True, 'pregnancy_id': pregnancy.pk}
+    return {'ok': False, 'error': _('Validation failed.'), 'field_errors': form.errors.get_json_data()}
+
+
+def _prenatal_visit_create(user: User, payload: dict[str, Any]) -> dict[str, Any]:
+    if not user_can_manage_patients(user):
+        return {'ok': False, 'error': _('You do not have permission to add or change pregnancy records.')}
+    try:
+        pregnancy_pk = int(payload['pregnancy_pk'])
+    except (KeyError, TypeError, ValueError):
+        return {'ok': False, 'error': _('Invalid pregnancy reference.')}
+    pregnancy = pregnancy_queryset_for_user(user).filter(pk=pregnancy_pk).first()
+    if pregnancy is None:
+        return {'ok': False, 'error': _('Pregnancy not found or not accessible.')}
+    data = {k: v for k, v in payload.items() if k not in ('kind', 'pregnancy_pk')}
+    form = PrenatalVisitForm(data=data, user=user, pregnancy=pregnancy)
+    if form.is_valid():
+        visit = form.save(commit=False)
+        visit.pregnancy = pregnancy
+        visit.save()
+        return {'ok': True, 'prenatal_visit_id': visit.pk}
+    return {'ok': False, 'error': _('Validation failed.'), 'field_errors': form.errors.get_json_data()}
+
+
 def _triage_session(user: User, payload: dict[str, Any]) -> dict[str, Any]:
     try:
         protocol_pk = int(payload['protocol_pk'])
@@ -81,6 +135,12 @@ def apply_offline_item(user: User, item: dict[str, Any]) -> dict[str, Any]:
         return _patient_update(user, payload)
     if kind == 'triage_session':
         return _triage_session(user, payload)
+    if kind == 'pregnancy_create':
+        return _pregnancy_create(user, payload)
+    if kind == 'pregnancy_update':
+        return _pregnancy_update(user, payload)
+    if kind == 'prenatal_visit_create':
+        return _prenatal_visit_create(user, payload)
     return {'ok': False, 'error': _('Unknown sync kind.')}
 
 

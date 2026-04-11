@@ -100,6 +100,35 @@
         },
       };
     }
+    if (kind === 'pregnancy_create') {
+      var fdP = new FormData(form);
+      var payP = {};
+      fdP.forEach(function (v, k) {
+        if (k === 'csrfmiddlewaretoken') return;
+        payP[k] = v;
+      });
+      return { kind: kind, payload: payP };
+    }
+    if (kind === 'pregnancy_update') {
+      var pregPk = form.getAttribute('data-offline-pregnancy-pk');
+      var fdPu = new FormData(form);
+      var payPu = { pregnancy_pk: pregPk };
+      fdPu.forEach(function (v, k) {
+        if (k === 'csrfmiddlewaretoken') return;
+        payPu[k] = v;
+      });
+      return { kind: kind, payload: payPu };
+    }
+    if (kind === 'prenatal_visit_create') {
+      var pregnancyPk = form.getAttribute('data-offline-pregnancy-pk');
+      var fdV = new FormData(form);
+      var payV = { pregnancy_pk: pregnancyPk };
+      fdV.forEach(function (v, k) {
+        if (k === 'csrfmiddlewaretoken') return;
+        payV[k] = v;
+      });
+      return { kind: kind, payload: payV };
+    }
     return null;
   }
 
