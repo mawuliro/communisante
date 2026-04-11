@@ -4,6 +4,7 @@ Create operational alerts from pregnancy and visit data (idempotent: one open al
 
 from __future__ import annotations
 
+import logging
 from datetime import timedelta
 
 from django.conf import settings
@@ -13,6 +14,46 @@ from django.utils import timezone
 
 from alerts.models import Alert
 from maternal.models import PregnancyRecord, PrenatalVisit
+
+logger = logging.getLogger(__name__)
+
+
+def _create_alert(**kwargs) -> Alert:
+    """Create an alert and optionally SMS the district supervisor (HIGH / CRITICAL only)."""
+    alert = Alert.objects.create(**kwargs)
+    try:
+        _notify_supervisor_sms_if_needed(alert)
+    except Exception:
+        logger.exception('Supervisor SMS notification failed for alert %s', alert.pk)
+    return alert
+
+
+def _notify_supervisor_sms_if_needed(alert: Alert) -> None:
+    if alert.severity not in (Alert.Severity.HIGH, Alert.Severity.CRITICAL):
+        return
+    patient = alert.related_patient
+    chw = patient.assigned_chw
+    if chw is None or chw.district_id is None:
+        return
+    sup = chw.district.supervisor
+    if sup is None or not (sup.phone or '').strip():
+        return
+    from django.utils import translation
+    from django.utils.translation import gettext as _
+
+    from alerts import sms
+
+    lang = getattr(sup, 'language', None) or 'fr'
+    with translation.override(lang):
+        msg = str(
+            _('CommuniSanté: %(type)s — %(patient)s (%(sev)s).')
+            % {
+                'type': alert.get_type_display(),
+                'patient': str(patient),
+                'sev': alert.get_severity_display(),
+            }
+        )
+    sms.send_sms((sup.phone or '').strip(), msg)
 
 
 def _open_alert_exists(
@@ -73,7 +114,7 @@ def generate_missed_visit_alerts() -> int:
             continue
 
         with transaction.atomic():
-            Alert.objects.create(
+            _create_alert(
                 type=Alert.AlertType.MISSED_VISIT,
                 related_patient_id=pregnancy.patient_id,
                 related_pregnancy=pregnancy,
@@ -124,7 +165,7 @@ def generate_bp_danger_alerts() -> int:
             continue
 
         with transaction.atomic():
-            Alert.objects.create(
+            _create_alert(
                 type=Alert.AlertType.DANGER_SIGN,
                 related_patient_id=pregnancy.patient_id,
                 related_pregnancy=pregnancy,
@@ -155,7 +196,7 @@ def generate_high_risk_pregnancy_alerts() -> int:
             continue
 
         with transaction.atomic():
-            Alert.objects.create(
+            _create_alert(
                 type=Alert.AlertType.HIGH_RISK,
                 related_patient_id=pregnancy.patient_id,
                 related_pregnancy=pregnancy,

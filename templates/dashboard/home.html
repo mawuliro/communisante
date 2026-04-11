@@ -57,6 +57,11 @@
             </div>
             <p class="text-sm text-slate-600">{% trans "New patients in the last 7 days" %}: <span class="font-semibold">{{ recent_patient_count }}</span></p>
 
+            <div class="flex flex-wrap gap-3">
+                <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download CSV (district activity)" %}</a>
+                <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download PDF (high-risk pregnancies)" %}</a>
+            </div>
+
             <h2 class="text-lg font-semibold text-slate-900">{% trans "By district" %}</h2>
             <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
                 <table class="min-w-full text-sm text-left">
@@ -65,6 +70,7 @@
                             <th class="px-4 py-3">{% trans "District" %}</th>
                             <th class="px-4 py-3">{% trans "CHWs" %}</th>
                             <th class="px-4 py-3">{% trans "Patients" %}</th>
+                            <th class="px-4 py-3">{% trans "CSV" %}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,6 +79,9 @@
                                 <td class="px-4 py-3 font-medium">{{ row.district.name }}</td>
                                 <td class="px-4 py-3">{{ row.chw_count }}</td>
                                 <td class="px-4 py-3">{{ row.patient_count }}</td>
+                                <td class="px-4 py-3">
+                                    <a class="text-emerald-800 underline font-medium" href="{% url 'dashboard:report_district_csv' %}?district={{ row.district.pk }}">{% trans "Export" %}</a>
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -104,6 +113,11 @@
                 <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
             </div>
         </div>
+        <div class="flex flex-wrap gap-3">
+            <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download CSV (all patients)" %}</a>
+            <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download PDF (high-risk pregnancies)" %}</a>
+        </div>
+        <p class="text-xs text-slate-500">{% trans "Admins: add ?district=&lt;id&gt; to the CSV URL to filter one district (IDs from the admin site)." %}</p>
 
     {% else %}
         <p class="text-slate-600">{% trans "Your account does not have a dashboard role yet. Use the admin site or ask for a CHW or supervisor profile." %}</p>

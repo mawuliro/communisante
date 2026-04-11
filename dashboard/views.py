@@ -4,15 +4,56 @@ Role-aware home dashboard: CHW summary vs supervisor or admin district view.
 
 from datetime import timedelta
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.utils import timezone
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
+from django.utils import timezone, translation
+from django.utils.translation import gettext as _
+from django.views import View
 from django.views.generic import TemplateView
 
 from accounts.models import District, HealthWorker
+from dashboard.reporting import csv_district_response, pdf_high_risk_response
 from alerts.access import alert_queryset_for_user
 from alerts.models import Alert
 from maternal.models import PregnancyRecord
 from patients.models import Patient
+
+
+class ReportsAccessMixin(UserPassesTestMixin):
+    """Supervisors and administrators may download district / risk exports."""
+
+    def test_func(self):
+        u = self.request.user
+        return u.is_authenticated and (
+            u.is_superuser
+            or getattr(u, 'is_admin_user', False)
+            or getattr(u, 'is_supervisor', False)
+        )
+
+    def handle_no_permission(self):
+        messages.error(
+            self.request,
+            _('You do not have permission to download reports.'),
+        )
+        return redirect('dashboard:home')
+
+
+class DistrictCsvExportView(LoginRequiredMixin, ReportsAccessMixin, View):
+    """CSV of patients in scope (all districts or ``?district=<id>`` for one district)."""
+
+    def get(self, request, *args, **kwargs):
+        raw = request.GET.get('district')
+        district_id = int(raw) if raw and str(raw).strip().isdigit() else None
+        return csv_district_response(request.user, district_id)
+
+
+class HighRiskPdfExportView(LoginRequiredMixin, ReportsAccessMixin, View):
+    """PDF table of active HIGH-risk pregnancies in scope."""
+
+    def get(self, request, *args, **kwargs):
+        lang = getattr(request, 'LANGUAGE_CODE', None) or translation.get_language()
+        return pdf_high_risk_response(request.user, lang)
 
 
 class DashboardView(LoginRequiredMixin, TemplateView):

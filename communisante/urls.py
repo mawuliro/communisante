@@ -8,13 +8,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
-from core.views import health
+from core.views import health, service_worker, web_manifest
 
 urlpatterns = [
     path('health/', health, name='health'),
     path('health', health),  # no trailing slash — some load balancers omit it
+    path('sw.js', service_worker, name='service-worker'),
+    path('manifest.webmanifest', web_manifest, name='web-manifest'),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
+    path('api/', include(('api.urls', 'api'), namespace='api')),
 ]
 
 # Add app URLs within i18n_patterns for language support
@@ -25,7 +28,6 @@ urlpatterns += i18n_patterns(
     path('maternal/', include('maternal.urls')),
     path('alerts/', include('alerts.urls')),
     path('dashboard/', include('dashboard.urls')),
-    path('api/', include('api.urls')),
     path('', include('core.urls')),  # Home page
 )
 
