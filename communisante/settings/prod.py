@@ -66,12 +66,9 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-# Railway health checks hit the app over HTTP without X-Forwarded-Proto; forcing HTTPS here breaks them (503).
-# Public traffic is still HTTPS at the edge; real clients keep secure cookies via SECURE_PROXY_SSL_HEADER.
-SECURE_SSL_REDIRECT = env.bool(
-    'SECURE_SSL_REDIRECT',
-    default=not bool(os.environ.get('RAILWAY_ENVIRONMENT')),
-)
+# Never default True: Railway often omits RAILWAY_ENVIRONMENT; probes then hit HTTP and get 301 → unhealthy.
+# TLS is enforced at the edge (Railway, Render, etc.). Set SECURE_SSL_REDIRECT=true only if your proxy always sends X-Forwarded-Proto on internal checks.
+SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=False)
 
 # HSTS (HTTP Strict Transport Security)
 SECURE_HSTS_SECONDS = 31536000  # 1 year
