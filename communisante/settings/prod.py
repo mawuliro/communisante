@@ -8,6 +8,21 @@ import os
 import environ
 from .base import *
 
+# Serve /static/* before SecurityMiddleware so TLS/proxy quirks never touch admin assets.
+_mw = [
+    m
+    for m in MIDDLEWARE
+    if m
+    not in (
+        'whitenoise.middleware.WhiteNoiseMiddleware',
+        'django.middleware.security.SecurityMiddleware',
+    )
+]
+MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+] + _mw
+
 # Initialize environment variables
 env = environ.Env()
 

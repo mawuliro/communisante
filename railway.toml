@@ -1,0 +1,15 @@
+# Config as code — overrides dashboard settings. See:
+# https://docs.railway.com/config-as-code/reference
+#
+# - collectstatic must run at BUILD time (or in the web container start), not in
+#   Railway pre-deploy (separate FS, changes are not kept).
+# - Heroku-style Procfile `release:` is not a reliable migration hook on Railway;
+#   use preDeployCommand for migrate (DB only, no FS needed).
+
+[build]
+buildCommand = "pip install -r requirements.txt && python manage.py collectstatic --noinput --settings=communisante.settings.build_static"
+
+[deploy]
+startCommand = "gunicorn communisante.wsgi:application --bind 0.0.0.0:$PORT --workers 2"
+preDeployCommand = ["python", "manage.py", "migrate", "--noinput", "--settings=communisante.settings.prod"]
+healthcheckPath = "/health/"
