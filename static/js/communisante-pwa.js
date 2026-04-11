@@ -129,6 +129,16 @@
       });
       return { kind: kind, payload: payV };
     }
+    if (kind === 'alert_resolve') {
+      var alertPk = form.getAttribute('data-offline-alert-pk');
+      var fdA = new FormData(form);
+      var payA = { alert_pk: alertPk };
+      fdA.forEach(function (v, k) {
+        if (k === 'csrfmiddlewaretoken') return;
+        payA[k] = v;
+      });
+      return { kind: kind, payload: payA };
+    }
     return null;
   }
 

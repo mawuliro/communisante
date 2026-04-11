@@ -35,5 +35,8 @@ staticfiles/
 htmlcov/
 .tox/
 
+# Node (Tailwind build)
+node_modules/
+
 # Railway
 railway.json

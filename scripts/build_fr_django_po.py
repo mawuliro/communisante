@@ -354,6 +354,27 @@ PAIRS: list[tuple[str, str]] = [
     ),
     ("Back to protocols", "Retour aux protocoles"),
     ("closed", "clôturée"),
+    # --- UI refresh (base, home, login) ---
+    ("Community health", "Santé communautaire"),
+    ("Main navigation", "Navigation principale"),
+    (
+        "Register and follow people in your catchment area.",
+        "Enregistrer et suivre les personnes de votre zone d'intervention.",
+    ),
+    (
+        "Protocols and notifications to support decisions in the field.",
+        "Protocoles et alertes pour appuyer les décisions sur le terrain.",
+    ),
+    (
+        "Key forms queue on the device and sync when you reconnect.",
+        "Les formulaires importants sont mis en file sur l'appareil et synchronisés au retour du réseau.",
+    ),
+    ("Use your staff credentials to continue.", "Utilisez vos identifiants professionnels pour continuer."),
+    # --- Offline sync ---
+    ("Alert not found.", "Alerte introuvable."),
+    ("Missing alert_pk.", "Identifiant d'alerte manquant."),
+    ("Invalid alert_pk.", "Identifiant d'alerte invalide."),
+    ("Skip to main content", "Aller au contenu principal"),
 ]
 
 

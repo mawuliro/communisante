@@ -1,0 +1,10 @@
+{
+  "name": "communisante",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.cjs -i ./static/src/tailwind-input.css -o ./static/css/communisante.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}

@@ -10,9 +10,12 @@ from typing import Any
 from django.contrib.auth import get_user_model
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpRequest, JsonResponse
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from alerts.access import user_can_resolve_alert
+from alerts.models import Alert
 from maternal.access import pregnancy_queryset_for_user
 from maternal.forms import PregnancyForm, PrenatalVisitForm
 from patients.access import patient_queryset_for_user, user_can_manage_patients
@@ -106,6 +109,31 @@ def _prenatal_visit_create(user: User, payload: dict[str, Any]) -> dict[str, Any
     return {'ok': False, 'error': _('Validation failed.'), 'field_errors': form.errors.get_json_data()}
 
 
+def _alert_resolve(user: User, payload: dict[str, Any]) -> dict[str, Any]:
+    pk = payload.get('alert_pk')
+    if pk is None:
+        return {'ok': False, 'error': _('Missing alert_pk.')}
+    try:
+        pk = int(pk)
+    except (TypeError, ValueError):
+        return {'ok': False, 'error': _('Invalid alert_pk.')}
+    alert = Alert.objects.filter(pk=pk).first()
+    if alert is None:
+        return {'ok': False, 'error': _('Alert not found.')}
+    if not user_can_resolve_alert(user, alert):
+        return {'ok': False, 'error': _('You cannot resolve this alert.')}
+    if alert.resolved:
+        return {'ok': True, 'alert_id': alert.pk, 'already_resolved': True}
+    notes = (payload.get('notes') or '').strip()
+    alert.resolved = True
+    alert.resolved_by = user
+    alert.resolved_at = timezone.now()
+    if notes:
+        alert.notes = (alert.notes + '\n' if alert.notes else '') + notes
+    alert.save(update_fields=['resolved', 'resolved_by', 'resolved_at', 'notes'])
+    return {'ok': True, 'alert_id': alert.pk}
+
+
 def _triage_session(user: User, payload: dict[str, Any]) -> dict[str, Any]:
     try:
         protocol_pk = int(payload['protocol_pk'])
@@ -141,6 +169,8 @@ def apply_offline_item(user: User, item: dict[str, Any]) -> dict[str, Any]:
         return _pregnancy_update(user, payload)
     if kind == 'prenatal_visit_create':
         return _prenatal_visit_create(user, payload)
+    if kind == 'alert_resolve':
+        return _alert_resolve(user, payload)
     return {'ok': False, 'error': _('Unknown sync kind.')}
 
 

@@ -7,6 +7,7 @@
 #   use preDeployCommand for migrate (DB only, no FS needed).
 
 [build]
+# CSS: run `npm ci && npm run build:css` locally when templates change; `static/css/communisante.css` is versioned.
 buildCommand = "pip install -r requirements.txt && python manage.py collectstatic --noinput --settings=communisante.settings.build_static"
 
 [deploy]

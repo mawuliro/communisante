@@ -12,22 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            },
-            boxShadow: {
-              soft: '0 2px 15px -3px rgb(0 0 0 / 0.06), 0 10px 20px -5px rgb(0 0 0 / 0.04)',
-              lift: '0 10px 40px -10px rgb(15 118 110 / 0.25)',
-            },
-          },
-        },
-      };
-    </script>
+    <link rel="stylesheet" href="{% static 'css/communisante.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body class="min-h-screen flex flex-col antialiased font-sans text-slate-900 bg-gradient-to-br from-slate-50 via-emerald-50/35 to-teal-50/40">
@@ -39,6 +24,7 @@
         {% trans "Saved locally. It will sync when the connection returns." %}
     </p>
 
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:rounded-lg focus:bg-white focus:text-emerald-900 focus:px-4 focus:py-2 focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-400">{% trans "Skip to main content" %}</a>
     <header class="sticky top-0 z-40 border-b border-teal-900/20 bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white shadow-soft">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-wrap items-center justify-between gap-y-3 gap-x-4 py-3.5 sm:py-4">
@@ -86,7 +72,7 @@
         </div>
     </header>
 
-    <main class="flex-1 w-full max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+    <main id="main-content" class="flex-1 w-full max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12" role="main" tabindex="-1">
         {% if messages %}
             <ul class="mb-6 sm:mb-8 space-y-3" role="status">
                 {% for message in messages %}

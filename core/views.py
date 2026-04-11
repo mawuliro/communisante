@@ -25,6 +25,7 @@ def _precache_urls(request):
     ]
     urls = []
     for rel in (
+        static('css/communisante.css'),
         static('offline.html'),
         static('js/communisante-pwa.js'),
         static('pwa/icon-192.png'),
