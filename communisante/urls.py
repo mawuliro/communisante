@@ -12,6 +12,7 @@ from core.views import health
 
 urlpatterns = [
     path('health/', health, name='health'),
+    path('health', health),  # no trailing slash — some load balancers omit it
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),
 ]

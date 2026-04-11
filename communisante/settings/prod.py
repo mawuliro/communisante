@@ -34,7 +34,12 @@ DEBUG = False
 
 # Security settings
 SECRET_KEY = env('SECRET_KEY')
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['.railway.app', '.up.railway.app'])
+_allowed = env.list('ALLOWED_HOSTS', default=['.railway.app', '.up.railway.app'])
+# Probes (Railway, Docker) often use localhost or bare IP; internal Host headers are not *.railway.app.
+for _h in ('localhost', '127.0.0.1', '[::1]'):
+    if _h not in _allowed:
+        _allowed.append(_h)
+ALLOWED_HOSTS = _allowed
 
 # HTTPS POST (login, forms) behind Railway TLS
 _csrf = list(env.list('CSRF_TRUSTED_ORIGINS', default=[]))
@@ -61,7 +66,12 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = 'DENY'
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
+# Railway health checks hit the app over HTTP without X-Forwarded-Proto; forcing HTTPS here breaks them (503).
+# Public traffic is still HTTPS at the edge; real clients keep secure cookies via SECURE_PROXY_SSL_HEADER.
+SECURE_SSL_REDIRECT = env.bool(
+    'SECURE_SSL_REDIRECT',
+    default=not bool(os.environ.get('RAILWAY_ENVIRONMENT')),
+)
 
 # HSTS (HTTP Strict Transport Security)
 SECURE_HSTS_SECONDS = 31536000  # 1 year
