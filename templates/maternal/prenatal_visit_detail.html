@@ -4,17 +4,20 @@
 {% block title %}{% trans "Prenatal visit" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
-    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Prenatal visit" %}</h1>
+<div class="space-y-6 sm:space-y-8">
+    <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Prenatal visit" %}</h1>
+        <div class="mt-2 h-1 w-14 rounded-full bg-gradient-to-r from-teal-500 to-emerald-600"></div>
+    </div>
 
     {% if bp_alert %}
-        <div class="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-amber-950 text-sm" role="alert">
+        <div class="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-amber-100/50 px-5 py-4 text-amber-950 text-sm shadow-soft" role="alert">
             <p class="font-semibold">{% trans "Elevated blood pressure" %}</p>
             <p class="mt-1">{% trans "Consider urgent assessment or referral according to your district protocol." %}</p>
         </div>
     {% endif %}
 
-    <div class="rounded-lg border border-slate-200 bg-white shadow-sm p-5 space-y-3 text-slate-800">
+    <div class="rounded-3xl border border-slate-200/80 bg-white/95 shadow-soft p-6 sm:p-8 space-y-4 text-slate-800">
         <div><span class="font-medium text-slate-700">{% trans "Date" %}:</span> {{ visit.date }}</div>
         <div><span class="font-medium text-slate-700">{% trans "Patient" %}:</span>
             <a href="{% url 'patients:detail' visit.pregnancy.patient_id %}" class="text-emerald-700 underline">{{ visit.pregnancy.patient.first_name }} {{ visit.pregnancy.patient.last_name }}</a>
@@ -45,7 +48,7 @@
     </div>
 
     <a href="{% url 'maternal:pregnancy_detail' visit.pregnancy_id %}"
-       class="inline-flex justify-center items-center min-h-[48px] px-6 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">
+       class="inline-flex justify-center items-center min-h-[52px] px-8 rounded-2xl bg-slate-800 text-white font-semibold shadow-soft hover:bg-slate-900 transition-colors">
         {% trans "Back to pregnancy" %}
     </a>
 </div>
