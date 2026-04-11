@@ -4,30 +4,33 @@
 {% block title %}{% trans "Pregnancies" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
+<div class="space-y-6 sm:space-y-8">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Pregnancies" %}</h1>
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Pregnancies" %}</h1>
+            <div class="mt-2 h-1 w-14 rounded-full bg-gradient-to-r from-teal-500 to-emerald-600"></div>
+        </div>
         {% if can_manage_maternal %}
             <a href="{% url 'maternal:pregnancy_create' %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+               class="inline-flex justify-center items-center min-h-[52px] px-6 rounded-2xl bg-emerald-600 text-white font-semibold shadow-soft hover:bg-emerald-700 transition-all shrink-0">
                 {% trans "New pregnancy" %}
             </a>
         {% endif %}
     </div>
 
-    <form method="get" class="flex flex-wrap gap-2 items-center text-sm">
-        <span class="text-slate-600">{% trans "Filter" %}:</span>
-        <a href="{% url 'maternal:pregnancy_list' %}" class="px-3 py-2 rounded-lg border {% if not filter_active %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "All" %}</a>
-        <a href="?active=1" class="px-3 py-2 rounded-lg border {% if filter_active == '1' %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "Active only" %}</a>
-        <a href="?active=0" class="px-3 py-2 rounded-lg border {% if filter_active == '0' %}bg-emerald-100 border-emerald-300{% else %}border-slate-300{% endif %}">{% trans "Closed" %}</a>
-    </form>
+    <div class="flex flex-wrap gap-2 items-center text-sm p-3 rounded-2xl bg-white/90 border border-slate-200/80 shadow-soft">
+        <span class="text-slate-600 font-medium w-full sm:w-auto">{% trans "Filter" %}:</span>
+        <a href="{% url 'maternal:pregnancy_list' %}" class="px-4 py-2.5 rounded-xl border font-medium transition-colors {% if not filter_active %}bg-emerald-100 border-emerald-400 text-emerald-900{% else %}border-slate-200 text-slate-700 hover:bg-slate-50{% endif %}">{% trans "All" %}</a>
+        <a href="?active=1" class="px-4 py-2.5 rounded-xl border font-medium transition-colors {% if filter_active == '1' %}bg-emerald-100 border-emerald-400 text-emerald-900{% else %}border-slate-200 text-slate-700 hover:bg-slate-50{% endif %}">{% trans "Active only" %}</a>
+        <a href="?active=0" class="px-4 py-2.5 rounded-xl border font-medium transition-colors {% if filter_active == '0' %}bg-emerald-100 border-emerald-400 text-emerald-900{% else %}border-slate-200 text-slate-700 hover:bg-slate-50{% endif %}">{% trans "Closed" %}</a>
+    </div>
 
     {% if pregnancies %}
-        <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+        <ul class="divide-y divide-slate-100 rounded-2xl border border-slate-200/80 bg-white shadow-soft overflow-hidden">
             {% for pr in pregnancies %}
                 <li>
-                    <a href="{% url 'maternal:pregnancy_detail' pr.pk %}" class="block min-h-[56px] px-4 py-3 hover:bg-slate-50">
-                        <div class="font-medium text-slate-900">{{ pr.patient.first_name }} {{ pr.patient.last_name }}</div>
+                    <a href="{% url 'maternal:pregnancy_detail' pr.pk %}" class="block min-h-[56px] px-4 sm:px-5 py-4 hover:bg-teal-50/50 transition-colors group">
+                        <div class="font-semibold text-slate-900 group-hover:text-emerald-900">{{ pr.patient.first_name }} {{ pr.patient.last_name }}</div>
                         <div class="text-sm text-slate-600 mt-1">
                             {% trans "EDD" %}: {{ pr.expected_delivery_date }}
                             · {% trans "Risk" %}: {{ pr.get_risk_level_display }}
@@ -50,7 +53,7 @@
             </nav>
         {% endif %}
     {% else %}
-        <p class="text-slate-600">{% trans "No pregnancy records yet." %}</p>
+        <p class="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-10 text-center text-slate-600">{% trans "No pregnancy records yet." %}</p>
     {% endif %}
 </div>
 {% endblock %}

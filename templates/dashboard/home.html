@@ -4,83 +4,86 @@
 {% block title %}{% trans "Dashboard" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-8">
-    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Dashboard" %}</h1>
+<div class="space-y-8 sm:space-y-10">
+    <div class="space-y-2">
+        <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Dashboard" %}</h1>
+        <div class="h-1 w-16 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+    </div>
 
     {% if dashboard_role == 'chw' %}
-        <p class="text-slate-600">{% trans "Welcome" %}, {{ hw }}.</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <a href="{% url 'patients:list' %}" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
-                <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Patients" %}</div>
+        <p class="text-slate-600 text-lg">{% trans "Welcome" %}, <span class="font-semibold text-slate-800">{{ hw }}</span>.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            <a href="{% url 'patients:list' %}" class="group block rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft hover:shadow-md hover:border-emerald-200/80 transition-all">
+                <div class="text-3xl sm:text-4xl font-bold text-emerald-700 tabular-nums">{{ patient_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold group-hover:text-emerald-800">{% trans "Patients" %}</div>
             </a>
-            <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
-                <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+            <a href="{% url 'alerts:list' %}?status=open" class="group block rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft hover:shadow-md hover:border-amber-200/80 transition-all">
+                <div class="text-3xl sm:text-4xl font-bold text-amber-700 tabular-nums">{{ open_alert_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold group-hover:text-amber-900">{% trans "Open alerts" %}</div>
             </a>
-            <a href="{% url 'maternal:pregnancy_list' %}?active=1" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
-                <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+            <a href="{% url 'maternal:pregnancy_list' %}?active=1" class="group block rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft hover:shadow-md hover:border-teal-200/80 transition-all">
+                <div class="text-3xl sm:text-4xl font-bold text-teal-700 tabular-nums">{{ active_pregnancy_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold group-hover:text-teal-900">{% trans "Active pregnancies" %}</div>
             </a>
-            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div class="text-3xl font-bold text-slate-800">{{ recent_patient_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "New patients (7 days)" %}</div>
+            <div class="rounded-2xl border border-slate-200/80 bg-gradient-to-br from-slate-50 to-white p-6 shadow-soft ring-1 ring-slate-100">
+                <div class="text-3xl sm:text-4xl font-bold text-slate-800 tabular-nums">{{ recent_patient_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold">{% trans "New patients (7 days)" %}</div>
             </div>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="{% url 'patients:create' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">{% trans "Register patient" %}</a>
-            <a href="{% url 'triage:protocol_list' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">{% trans "Triage" %}</a>
+            <a href="{% url 'patients:create' %}" class="inline-flex min-h-[52px] items-center px-6 rounded-2xl bg-emerald-600 text-white font-semibold shadow-soft hover:bg-emerald-700 hover:shadow-md transition-all">{% trans "Register patient" %}</a>
+            <a href="{% url 'triage:protocol_list' %}" class="inline-flex min-h-[52px] items-center px-6 rounded-2xl bg-slate-800 text-white font-semibold shadow-soft hover:bg-slate-900 transition-all">{% trans "Triage" %}</a>
         </div>
 
     {% elif dashboard_role == 'supervisor' %}
-        <p class="text-slate-600">{% trans "Supervisor overview for your districts." %}</p>
+        <p class="text-slate-600 text-lg">{% trans "Supervisor overview for your districts." %}</p>
         {% if not districts %}
-            <p class="rounded-md bg-amber-50 text-amber-950 px-4 py-3 text-sm">{% trans "No district is linked to your account yet. Ask an administrator to assign you as supervisor on a district." %}</p>
+            <p class="rounded-2xl bg-amber-50 text-amber-950 px-5 py-4 text-sm border border-amber-100 shadow-soft">{% trans "No district is linked to your account yet. Ask an administrator to assign you as supervisor on a district." %}</p>
         {% else %}
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                    <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
-                    <div class="text-slate-700 font-medium">{% trans "Patients in scope" %}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                    <div class="text-3xl font-bold text-emerald-700 tabular-nums">{{ patient_count }}</div>
+                    <div class="mt-1 text-slate-700 font-semibold">{% trans "Patients in scope" %}</div>
                 </div>
-                <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
-                    <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
-                    <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+                <a href="{% url 'alerts:list' %}?status=open" class="group block rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft hover:shadow-md hover:border-amber-200/80 transition-all">
+                    <div class="text-3xl font-bold text-amber-700 tabular-nums">{{ open_alert_count }}</div>
+                    <div class="mt-1 text-slate-700 font-semibold group-hover:text-amber-900">{% trans "Open alerts" %}</div>
                 </a>
-                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                    <div class="text-3xl font-bold text-slate-800">{{ chw_count }}</div>
-                    <div class="text-slate-700 font-medium">{% trans "Active CHWs" %}</div>
+                <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                    <div class="text-3xl font-bold text-slate-800 tabular-nums">{{ chw_count }}</div>
+                    <div class="mt-1 text-slate-700 font-semibold">{% trans "Active CHWs" %}</div>
                 </div>
-                <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                    <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
-                    <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+                <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                    <div class="text-3xl font-bold text-teal-700 tabular-nums">{{ active_pregnancy_count }}</div>
+                    <div class="mt-1 text-slate-700 font-semibold">{% trans "Active pregnancies" %}</div>
                 </div>
             </div>
-            <p class="text-sm text-slate-600">{% trans "New patients in the last 7 days" %}: <span class="font-semibold">{{ recent_patient_count }}</span></p>
+            <p class="text-sm sm:text-base text-slate-600">{% trans "New patients in the last 7 days" %}: <span class="font-bold text-slate-900 tabular-nums">{{ recent_patient_count }}</span></p>
 
             <div class="flex flex-wrap gap-3">
-                <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download CSV (district activity)" %}</a>
-                <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download PDF (high-risk pregnancies)" %}</a>
+                <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[52px] items-center px-5 rounded-2xl border-2 border-emerald-600 text-emerald-800 font-semibold bg-white hover:bg-emerald-50 shadow-soft transition-colors">{% trans "Download CSV (district activity)" %}</a>
+                <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[52px] items-center px-5 rounded-2xl border-2 border-emerald-600 text-emerald-800 font-semibold bg-white hover:bg-emerald-50 shadow-soft transition-colors">{% trans "Download PDF (high-risk pregnancies)" %}</a>
             </div>
 
-            <h2 class="text-lg font-semibold text-slate-900">{% trans "By district" %}</h2>
-            <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900 pt-2">{% trans "By district" %}</h2>
+            <div class="overflow-x-auto rounded-2xl border border-slate-200/80 bg-white shadow-soft -mx-1 px-1 sm:mx-0 sm:px-0">
                 <table class="min-w-full text-sm text-left">
-                    <thead class="bg-slate-100 text-slate-700">
+                    <thead class="bg-gradient-to-r from-slate-100 to-emerald-50/50 text-slate-800">
                         <tr>
-                            <th class="px-4 py-3">{% trans "District" %}</th>
-                            <th class="px-4 py-3">{% trans "CHWs" %}</th>
-                            <th class="px-4 py-3">{% trans "Patients" %}</th>
-                            <th class="px-4 py-3">{% trans "CSV" %}</th>
+                            <th class="px-4 sm:px-5 py-3.5 font-semibold rounded-tl-2xl">{% trans "District" %}</th>
+                            <th class="px-4 sm:px-5 py-3.5 font-semibold">{% trans "CHWs" %}</th>
+                            <th class="px-4 sm:px-5 py-3.5 font-semibold">{% trans "Patients" %}</th>
+                            <th class="px-4 sm:px-5 py-3.5 font-semibold rounded-tr-2xl">{% trans "CSV" %}</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for row in district_rows %}
-                            <tr class="border-t border-slate-200">
-                                <td class="px-4 py-3 font-medium">{{ row.district.name }}</td>
-                                <td class="px-4 py-3">{{ row.chw_count }}</td>
-                                <td class="px-4 py-3">{{ row.patient_count }}</td>
-                                <td class="px-4 py-3">
-                                    <a class="text-emerald-800 underline font-medium" href="{% url 'dashboard:report_district_csv' %}?district={{ row.district.pk }}">{% trans "Export" %}</a>
+                            <tr class="border-t border-slate-100 hover:bg-emerald-50/30 transition-colors">
+                                <td class="px-4 sm:px-5 py-3.5 font-medium text-slate-900">{{ row.district.name }}</td>
+                                <td class="px-4 sm:px-5 py-3.5 tabular-nums">{{ row.chw_count }}</td>
+                                <td class="px-4 sm:px-5 py-3.5 tabular-nums">{{ row.patient_count }}</td>
+                                <td class="px-4 sm:px-5 py-3.5">
+                                    <a class="inline-flex font-semibold text-emerald-700 hover:text-emerald-900 underline decoration-emerald-300 underline-offset-2" href="{% url 'dashboard:report_district_csv' %}?district={{ row.district.pk }}">{% trans "Export" %}</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -90,38 +93,38 @@
         {% endif %}
 
     {% elif dashboard_role == 'admin' %}
-        <p class="text-slate-600">{% trans "Administrator overview." %}</p>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div class="text-3xl font-bold text-emerald-800">{{ patient_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Patients" %}</div>
+        <p class="text-slate-600 text-lg">{% trans "Administrator overview." %}</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                <div class="text-3xl font-bold text-emerald-700 tabular-nums">{{ patient_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold">{% trans "Patients" %}</div>
             </div>
-            <a href="{% url 'alerts:list' %}?status=open" class="block rounded-lg border border-slate-200 bg-white p-5 shadow-sm hover:bg-slate-50">
-                <div class="text-3xl font-bold text-amber-800">{{ open_alert_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Open alerts" %}</div>
+            <a href="{% url 'alerts:list' %}?status=open" class="group block rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft hover:shadow-md hover:border-amber-200/80 transition-all">
+                <div class="text-3xl font-bold text-amber-700 tabular-nums">{{ open_alert_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold group-hover:text-amber-900">{% trans "Open alerts" %}</div>
             </a>
-            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div class="text-3xl font-bold text-slate-800">{{ chw_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Active CHWs" %}</div>
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                <div class="text-3xl font-bold text-slate-800 tabular-nums">{{ chw_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold">{% trans "Active CHWs" %}</div>
             </div>
-            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div class="text-3xl font-bold text-slate-800">{{ district_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Districts" %}</div>
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                <div class="text-3xl font-bold text-slate-800 tabular-nums">{{ district_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold">{% trans "Districts" %}</div>
             </div>
-            <div class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                <div class="text-3xl font-bold text-teal-800">{{ active_pregnancy_count }}</div>
-                <div class="text-slate-700 font-medium">{% trans "Active pregnancies" %}</div>
+            <div class="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-soft">
+                <div class="text-3xl font-bold text-teal-700 tabular-nums">{{ active_pregnancy_count }}</div>
+                <div class="mt-1 text-slate-700 font-semibold">{% trans "Active pregnancies" %}</div>
             </div>
         </div>
         <div class="flex flex-wrap gap-3">
-            <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download CSV (all patients)" %}</a>
-            <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg border-2 border-emerald-700 text-emerald-800 font-semibold hover:bg-emerald-50">{% trans "Download PDF (high-risk pregnancies)" %}</a>
+            <a href="{% url 'dashboard:report_district_csv' %}" class="inline-flex min-h-[52px] items-center px-5 rounded-2xl border-2 border-emerald-600 text-emerald-800 font-semibold bg-white hover:bg-emerald-50 shadow-soft transition-colors">{% trans "Download CSV (all patients)" %}</a>
+            <a href="{% url 'dashboard:report_high_risk_pdf' %}" class="inline-flex min-h-[52px] items-center px-5 rounded-2xl border-2 border-emerald-600 text-emerald-800 font-semibold bg-white hover:bg-emerald-50 shadow-soft transition-colors">{% trans "Download PDF (high-risk pregnancies)" %}</a>
         </div>
-        <p class="text-xs text-slate-500">{% trans "Admins: add ?district=&lt;id&gt; to the CSV URL to filter one district (IDs from the admin site)." %}</p>
+        <p class="text-xs text-slate-500 max-w-2xl leading-relaxed">{% trans "Admins: add ?district=&lt;id&gt; to the CSV URL to filter one district (IDs from the admin site)." %}</p>
 
     {% else %}
-        <p class="text-slate-600">{% trans "Your account does not have a dashboard role yet. Use the admin site or ask for a CHW or supervisor profile." %}</p>
-        <a href="{% url 'admin:index' %}" class="inline-flex min-h-[48px] items-center px-5 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">{% trans "Open admin" %}</a>
+        <p class="text-slate-600 text-lg max-w-xl">{% trans "Your account does not have a dashboard role yet. Use the admin site or ask for a CHW or supervisor profile." %}</p>
+        <a href="{% url 'admin:index' %}" class="inline-flex min-h-[52px] items-center px-6 rounded-2xl bg-slate-800 text-white font-semibold shadow-soft hover:bg-slate-900 transition-colors">{% trans "Open admin" %}</a>
     {% endif %}
 </div>
 {% endblock %}

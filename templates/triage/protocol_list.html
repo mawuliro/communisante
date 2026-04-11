@@ -4,12 +4,15 @@
 {% block title %}{% trans "Triage" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
-    <h1 class="text-2xl font-bold text-emerald-800">{% trans "Symptom triage" %}</h1>
-    <p class="text-slate-600">{% trans "Choose a protocol, then select a patient." %}</p>
+<div class="space-y-6 sm:space-y-8">
+    <div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Symptom triage" %}</h1>
+        <div class="mt-2 h-1 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-slate-600"></div>
+        <p class="mt-4 text-slate-600 text-lg max-w-2xl">{% trans "Choose a protocol, then select a patient." %}</p>
+    </div>
 
     {% if not can_run_triage %}
-        <p class="rounded-md bg-amber-50 text-amber-900 px-4 py-3 text-sm">
+        <p class="rounded-2xl bg-amber-50 text-amber-900 px-5 py-4 text-sm border border-amber-100 shadow-soft">
             {% trans "Your account needs an active community health worker profile to save a triage session. Supervisors can still review records in the admin." %}
         </p>
     {% endif %}
@@ -17,16 +20,16 @@
     {% if protocols %}
         <ul class="space-y-3">
             {% for p in protocols %}
-                <li class="rounded-lg border border-slate-200 bg-white shadow-sm">
-                    <div class="p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                        <div>
-                            <div class="font-semibold text-slate-900">{{ p.name }}</div>
+                <li class="rounded-2xl border border-slate-200/80 bg-white shadow-soft hover:shadow-md transition-shadow">
+                    <div class="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="min-w-0">
+                            <div class="font-bold text-slate-900 text-lg">{{ p.name }}</div>
                             {% if p.description %}
-                                <p class="text-sm text-slate-600 mt-1">{{ p.description }}</p>
+                                <p class="text-sm text-slate-600 mt-2 leading-relaxed">{{ p.description }}</p>
                             {% endif %}
                         </div>
                         <a href="{% url 'triage:pick_patient' protocol_pk=p.pk %}"
-                           class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700 shrink-0">
+                           class="inline-flex justify-center items-center min-h-[52px] px-6 rounded-2xl bg-emerald-600 text-white font-semibold shadow-soft hover:bg-emerald-700 shrink-0">
                             {% trans "Continue" %}
                         </a>
                     </div>

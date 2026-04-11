@@ -4,54 +4,58 @@
 {% block title %}{% trans "Patients" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
+<div class="space-y-6 sm:space-y-8">
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Patients" %}</h1>
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Patients" %}</h1>
+            <div class="mt-2 h-1 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        </div>
         {% if can_manage_patients %}
             <a href="{% url 'patients:create' %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+               class="inline-flex justify-center items-center min-h-[52px] px-6 rounded-2xl bg-emerald-600 text-white font-semibold shadow-soft hover:bg-emerald-700 hover:shadow-md transition-all shrink-0">
                 {% trans "New patient" %}
             </a>
         {% endif %}
     </div>
 
-    <form method="get" class="flex flex-col sm:flex-row gap-2" action="">
+    <form method="get" class="flex flex-col sm:flex-row gap-3 p-4 sm:p-5 rounded-2xl bg-white/90 border border-slate-200/80 shadow-soft" action="">
         <label for="q" class="sr-only">{% trans "Search" %}</label>
         <input id="q" type="search" name="q" value="{{ search_q|default:'' }}"
                placeholder="{% trans 'Name or village' %}"
-               class="flex-1 min-h-[48px] rounded-lg border border-slate-300 px-3 text-slate-900">
-        <button type="submit" class="min-h-[48px] px-5 rounded-lg bg-slate-800 text-white font-medium">
+               class="flex-1 min-h-[52px] rounded-xl border border-slate-200 bg-slate-50/80 px-4 text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-emerald-400/50 focus:border-emerald-400 outline-none transition-shadow">
+        <button type="submit" class="min-h-[52px] px-6 rounded-xl bg-slate-800 text-white font-semibold hover:bg-slate-900 transition-colors shrink-0">
             {% trans "Search" %}
         </button>
     </form>
 
     {% if patients %}
-        <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+        <ul class="rounded-2xl border border-slate-200/80 bg-white shadow-soft overflow-hidden divide-y divide-slate-100">
             {% for p in patients %}
                 <li>
-                    <a href="{% url 'patients:detail' p.pk %}" class="block min-h-[52px] px-4 py-3 hover:bg-slate-50">
-                        <span class="font-medium text-slate-900">{{ p.first_name }} {{ p.last_name }}</span>
-                        {% if p.village %}
-                            <span class="text-slate-600 text-sm"> · {{ p.village }}</span>
-                        {% endif %}
+                    <a href="{% url 'patients:detail' p.pk %}" class="flex items-center justify-between gap-3 min-h-[56px] px-4 sm:px-5 py-3.5 hover:bg-emerald-50/40 transition-colors group">
+                        <span class="font-semibold text-slate-900 group-hover:text-emerald-900">{{ p.first_name }} {{ p.last_name }}</span>
+                        <span class="flex items-center gap-2 text-slate-500 text-sm shrink-0">
+                            {% if p.village %}<span class="truncate max-w-[7rem] sm:max-w-md text-right">{{ p.village }}</span>{% endif %}
+                            <span class="text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true">→</span>
+                        </span>
                     </a>
                 </li>
             {% endfor %}
         </ul>
         {% if is_paginated %}
-            <nav class="flex justify-between text-sm">
+            <nav class="flex justify-between items-center text-sm font-medium pt-2">
                 {% if page_obj.has_previous %}
-                    <a class="text-emerald-700 underline" href="?page={{ page_obj.previous_page_number }}{% if search_q %}&q={{ search_q|urlencode }}{% endif %}">{% trans "Previous" %}</a>
+                    <a class="min-h-[44px] inline-flex items-center px-4 rounded-xl text-emerald-800 bg-white border border-emerald-200 hover:bg-emerald-50" href="?page={{ page_obj.previous_page_number }}{% if search_q %}&q={{ search_q|urlencode }}{% endif %}">{% trans "Previous" %}</a>
                 {% else %}
                     <span></span>
                 {% endif %}
                 {% if page_obj.has_next %}
-                    <a class="text-emerald-700 underline" href="?page={{ page_obj.next_page_number }}{% if search_q %}&q={{ search_q|urlencode }}{% endif %}">{% trans "Next" %}</a>
+                    <a class="min-h-[44px] inline-flex items-center px-4 rounded-xl text-emerald-800 bg-white border border-emerald-200 hover:bg-emerald-50" href="?page={{ page_obj.next_page_number }}{% if search_q %}&q={{ search_q|urlencode }}{% endif %}">{% trans "Next" %}</a>
                 {% endif %}
             </nav>
         {% endif %}
     {% else %}
-        <p class="text-slate-600">{% trans "No patients yet." %}</p>
+        <p class="rounded-2xl border border-dashed border-slate-300 bg-white/60 px-6 py-10 text-center text-slate-600">{% trans "No patients yet." %}</p>
     {% endif %}
 </div>
 {% endblock %}

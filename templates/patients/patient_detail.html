@@ -4,31 +4,32 @@
 {% block title %}{{ patient.first_name }} {{ patient.last_name }} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
-    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div>
-            <h1 class="text-2xl font-bold text-emerald-800">{{ patient.first_name }} {{ patient.last_name }}</h1>
-            <dl class="mt-3 text-slate-700 space-y-1">
+<div class="space-y-6 sm:space-y-8">
+    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 lg:gap-10">
+        <div class="flex-1 min-w-0 rounded-3xl bg-white/95 border border-slate-200/80 p-6 sm:p-8 shadow-soft">
+            <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{{ patient.first_name }} {{ patient.last_name }}</h1>
+            <div class="mt-3 h-1 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+            <dl class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3 text-slate-700">
                 {% if patient.age %}
-                    <div><span class="font-medium">{% trans "Age" %}:</span> {{ patient.age }}</div>
+                    <div class="rounded-xl bg-slate-50 px-4 py-3 border border-slate-100"><span class="text-xs font-semibold uppercase tracking-wide text-slate-500">{% trans "Age" %}</span><div class="font-semibold text-slate-900 mt-0.5">{{ patient.age }}</div></div>
                 {% endif %}
                 {% if patient.sex %}
-                    <div><span class="font-medium">{% trans "Sex" %}:</span> {{ patient.get_sex_display }}</div>
+                    <div class="rounded-xl bg-slate-50 px-4 py-3 border border-slate-100"><span class="text-xs font-semibold uppercase tracking-wide text-slate-500">{% trans "Sex" %}</span><div class="font-semibold text-slate-900 mt-0.5">{{ patient.get_sex_display }}</div></div>
                 {% endif %}
                 {% if patient.village %}
-                    <div><span class="font-medium">{% trans "Village" %}:</span> {{ patient.village }}</div>
+                    <div class="rounded-xl bg-slate-50 px-4 py-3 border border-slate-100 sm:col-span-2"><span class="text-xs font-semibold uppercase tracking-wide text-slate-500">{% trans "Village" %}</span><div class="font-semibold text-slate-900 mt-0.5">{{ patient.village }}</div></div>
                 {% endif %}
-                <div><span class="font-medium">{% trans "CHW" %}:</span> {{ patient.assigned_chw }}</div>
+                <div class="rounded-xl bg-emerald-50/80 px-4 py-3 border border-emerald-100 sm:col-span-2"><span class="text-xs font-semibold uppercase tracking-wide text-emerald-700">{% trans "CHW" %}</span><div class="font-semibold text-emerald-950 mt-0.5">{{ patient.assigned_chw }}</div></div>
             </dl>
             {% if patient_pregnancies %}
-                <section class="mt-6 border-t border-slate-200 pt-4">
-                    <h2 class="text-sm font-semibold text-slate-800">{% trans "Pregnancy records" %}</h2>
-                    <ul class="mt-2 space-y-2">
+                <section class="mt-8 pt-6 border-t border-slate-200">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wide">{% trans "Pregnancy records" %}</h2>
+                    <ul class="mt-3 space-y-2">
                         {% for pr in patient_pregnancies %}
                             <li>
-                                <a href="{% url 'maternal:pregnancy_detail' pr.pk %}" class="text-emerald-700 underline text-sm">
+                                <a href="{% url 'maternal:pregnancy_detail' pr.pk %}" class="inline-flex flex-wrap items-center gap-2 text-sm font-medium text-emerald-800 hover:text-emerald-950 underline decoration-emerald-300 underline-offset-2">
                                     {% trans "EDD" %} {{ pr.expected_delivery_date }}
-                                    {% if pr.is_active %}({% trans "active" %}){% else %}({% trans "closed" %}){% endif %}
+                                    {% if pr.is_active %}<span class="text-xs font-semibold text-teal-700 bg-teal-100 px-2 py-0.5 rounded-full">{% trans "active" %}</span>{% else %}<span class="text-xs text-slate-500">{% trans "closed" %}</span>{% endif %}
                                 </a>
                             </li>
                         {% endfor %}
@@ -36,29 +37,29 @@
                 </section>
             {% endif %}
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col sm:flex-row lg:flex-col gap-2 sm:flex-wrap lg:flex-nowrap lg:w-56 shrink-0">
             {% if can_manage_patients %}
                 <a href="{% url 'patients:update' patient.pk %}"
-                   class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-slate-800 text-white font-semibold hover:bg-slate-900">
+                   class="inline-flex justify-center items-center min-h-[52px] px-5 rounded-2xl bg-slate-800 text-white font-semibold shadow-soft hover:bg-slate-900 transition-colors">
                     {% trans "Edit" %}
                 </a>
             {% endif %}
             <a href="{% url 'triage:protocol_list' %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+               class="inline-flex justify-center items-center min-h-[52px] px-5 rounded-2xl bg-emerald-600 text-white font-semibold shadow-soft hover:bg-emerald-700 transition-colors">
                 {% trans "Run triage" %}
             </a>
             <a href="{% url 'maternal:pregnancy_list' %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-teal-700 text-white font-semibold hover:bg-teal-800">
+               class="inline-flex justify-center items-center min-h-[52px] px-5 rounded-2xl bg-teal-700 text-white font-semibold shadow-soft hover:bg-teal-800 transition-colors">
                 {% trans "Pregnancies" %}
             </a>
             {% if can_manage_patients %}
                 <a href="{% url 'maternal:pregnancy_create_for_patient' patient_pk=patient.pk %}"
-                   class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg bg-teal-600 text-white font-semibold hover:bg-teal-700">
+                   class="inline-flex justify-center items-center min-h-[52px] px-5 rounded-2xl bg-teal-600 text-white font-semibold shadow-soft hover:bg-teal-700 transition-colors">
                     {% trans "New pregnancy" %}
                 </a>
             {% endif %}
             <a href="{% url 'patients:list' %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-5 rounded-lg border border-slate-300 text-slate-800 font-medium hover:bg-slate-50">
+               class="inline-flex justify-center items-center min-h-[52px] px-5 rounded-2xl border-2 border-slate-200 bg-white text-slate-800 font-semibold hover:bg-slate-50 transition-colors">
                 {% trans "Back to list" %}
             </a>
         </div>

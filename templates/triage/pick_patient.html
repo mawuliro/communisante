@@ -4,26 +4,27 @@
 {% block title %}{% trans "Choose patient" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
+<div class="space-y-6 sm:space-y-8">
     <div>
-        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Choose a patient" %}</h1>
-        <p class="text-slate-600 mt-1">{{ protocol.name }}</p>
+        <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Choose a patient" %}</h1>
+        <div class="mt-2 h-1 w-14 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+        <p class="text-slate-600 mt-4 text-lg font-medium">{{ protocol.name }}</p>
     </div>
 
     {% if not can_run_triage %}
-        <p class="rounded-md bg-amber-50 text-amber-900 px-4 py-3 text-sm">
+        <p class="rounded-2xl bg-amber-50 text-amber-900 px-5 py-4 text-sm border border-amber-100 shadow-soft">
             {% trans "You need an active community health worker profile to open the checklist." %}
         </p>
     {% endif %}
 
     {% if patients %}
-        <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white shadow-sm">
+        <ul class="divide-y divide-slate-100 rounded-2xl border border-slate-200/80 bg-white shadow-soft overflow-hidden">
             {% for p in patients %}
                 <li>
                     {% if can_run_triage %}
                         <a href="{% url 'triage:session' protocol_pk=protocol.pk patient_pk=p.pk %}"
-                           class="block min-h-[52px] px-4 py-3 hover:bg-slate-50">
-                            <span class="font-medium text-slate-900">{{ p.first_name }} {{ p.last_name }}</span>
+                           class="block min-h-[56px] px-4 sm:px-5 py-3.5 hover:bg-emerald-50/50 transition-colors group">
+                            <span class="font-semibold text-slate-900 group-hover:text-emerald-900">{{ p.first_name }} {{ p.last_name }}</span>
                             {% if p.village %}
                                 <span class="text-slate-600 text-sm"> · {{ p.village }}</span>
                             {% endif %}

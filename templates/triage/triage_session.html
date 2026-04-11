@@ -4,18 +4,19 @@
 {% block title %}{% trans "Triage checklist" %} | {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="space-y-6">
-    <div>
-        <h1 class="text-2xl font-bold text-emerald-800">{% trans "Triage checklist" %}</h1>
-        <p class="text-slate-600 mt-1">
-            {{ patient.first_name }} {{ patient.last_name }}
-            <span class="text-slate-500"> · {{ protocol.name }}</span>
+<div class="space-y-6 sm:space-y-8">
+    <div class="rounded-3xl bg-white/95 border border-slate-200/80 p-6 sm:p-8 shadow-soft">
+        <h1 class="text-2xl sm:text-3xl font-bold text-emerald-900 tracking-tight">{% trans "Triage checklist" %}</h1>
+        <p class="text-slate-600 mt-3 text-base">
+            <span class="font-semibold text-slate-800">{{ patient.first_name }} {{ patient.last_name }}</span>
+            <span class="text-slate-400 mx-2">·</span>
+            <span class="text-slate-600">{{ protocol.name }}</span>
         </p>
     </div>
 
     {% if errors %}
         {% for e in errors %}
-            <p class="rounded-md bg-red-50 text-red-900 px-4 py-3 text-sm">{{ e }}</p>
+            <p class="rounded-2xl bg-red-50 text-red-900 px-5 py-4 text-sm border border-red-100 shadow-soft">{{ e }}</p>
         {% endfor %}
     {% endif %}
 
@@ -25,14 +26,14 @@
           data-offline-patient-pk="{{ patient.pk }}">
         {% csrf_token %}
         {% for category, symptoms in grouped_symptoms.items %}
-            <fieldset class="rounded-lg border border-slate-200 bg-white shadow-sm p-4">
-                <legend class="text-lg font-semibold text-slate-900 px-1">{{ category }}</legend>
-                <ul class="mt-3 space-y-3">
+            <fieldset class="rounded-2xl border border-slate-200/80 bg-white shadow-soft p-5 sm:p-6">
+                <legend class="text-base sm:text-lg font-bold text-slate-900 px-1">{{ category }}</legend>
+                <ul class="mt-4 space-y-2 sm:space-y-3">
                     {% for s in symptoms %}
                         <li>
-                            <label class="flex items-start gap-3 min-h-[48px] cursor-pointer">
+                            <label class="flex items-start gap-3 min-h-[52px] cursor-pointer rounded-xl px-3 py-2 -mx-1 hover:bg-emerald-50/50 transition-colors">
                                 <input type="checkbox" name="symptom" value="{{ s.pk }}"
-                                       class="mt-1 h-5 w-5 rounded border-slate-300 text-emerald-600 focus:ring-emerald-600">
+                                       class="mt-1.5 h-5 w-5 rounded-md border-slate-300 text-emerald-600 focus:ring-emerald-500">
                                 <span class="text-slate-800">{{ s.name }}</span>
                             </label>
                         </li>
@@ -41,12 +42,12 @@
             </fieldset>
         {% endfor %}
 
-        <div class="flex flex-col sm:flex-row gap-3">
-            <button type="submit" class="min-h-[48px] px-6 rounded-lg bg-emerald-600 text-white font-semibold hover:bg-emerald-700">
+        <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <button type="submit" class="min-h-[52px] px-8 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-semibold shadow-soft hover:from-emerald-700 hover:to-teal-700 transition-all">
                 {% trans "Get recommendation" %}
             </button>
             <a href="{% url 'triage:pick_patient' protocol_pk=protocol.pk %}"
-               class="inline-flex justify-center items-center min-h-[48px] px-6 rounded-lg border border-slate-300 text-slate-800 font-medium hover:bg-slate-50">
+               class="inline-flex justify-center items-center min-h-[52px] px-8 rounded-2xl border-2 border-slate-200 bg-white text-slate-800 font-semibold hover:bg-slate-50 transition-colors">
                 {% trans "Back" %}
             </a>
         </div>
