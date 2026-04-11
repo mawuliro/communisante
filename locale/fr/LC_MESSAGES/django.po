@@ -794,3 +794,33 @@ msgstr "Retour aux protocoles"
 
 msgid "closed"
 msgstr "clôturée"
+
+msgid "Community health"
+msgstr "Santé communautaire"
+
+msgid "Main navigation"
+msgstr "Navigation principale"
+
+msgid "Register and follow people in your catchment area."
+msgstr "Enregistrer et suivre les personnes de votre zone d'intervention."
+
+msgid "Protocols and notifications to support decisions in the field."
+msgstr "Protocoles et alertes pour appuyer les décisions sur le terrain."
+
+msgid "Key forms queue on the device and sync when you reconnect."
+msgstr "Les formulaires importants sont mis en file sur l'appareil et synchronisés au retour du réseau."
+
+msgid "Use your staff credentials to continue."
+msgstr "Utilisez vos identifiants professionnels pour continuer."
+
+msgid "Alert not found."
+msgstr "Alerte introuvable."
+
+msgid "Missing alert_pk."
+msgstr "Identifiant d'alerte manquant."
+
+msgid "Invalid alert_pk."
+msgstr "Identifiant d'alerte invalide."
+
+msgid "Skip to main content"
+msgstr "Aller au contenu principal"
