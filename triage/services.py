@@ -4,10 +4,12 @@ Rule-based triage: sum symptom weights, match first overlapping score band on th
 
 from __future__ import annotations
 
+from django.db import transaction
 from django.db.models import Prefetch, QuerySet
 from django.utils.translation import gettext as _
 
-from triage.models import Symptom, SymptomProtocol, TriageRule
+from patients.access import health_worker_for_triage, patient_queryset_for_user
+from triage.models import Symptom, SymptomCheck, SymptomProtocol, TriageRule
 
 
 def active_symptoms_for_protocol(protocol: SymptomProtocol) -> QuerySet[Symptom]:
@@ -59,3 +61,52 @@ def run_triage(
     if rule is None:
         return score, None, _('No triage rule matches this score. Ask an administrator to review protocol bands.')
     return score, rule, None
+
+
+def save_symptom_check_from_triage(
+    user,
+    protocol_pk: int,
+    patient_pk: int,
+    symptom_ids: list[int],
+) -> tuple[SymptomCheck | None, str | None]:
+    """
+    Persist a triage session (same rules as TriageSessionView POST).
+    Returns (SymptomCheck, None) on success or (None, error_message).
+    """
+    hw = health_worker_for_triage(user)
+    if hw is None:
+        return None, str(
+            _(
+                'Triage checks must be saved under a community health worker profile. '
+                'Ask an administrator to link your account.'
+            )
+        )
+
+    protocol = SymptomProtocol.objects.filter(pk=protocol_pk, is_active=True).first()
+    if protocol is None:
+        return None, str(_('Unknown or inactive protocol.'))
+
+    patient = patient_queryset_for_user(user).filter(pk=patient_pk).first()
+    if patient is None:
+        return None, str(_('Patient not found or not accessible.'))
+
+    proto_full = protocol_with_rules(protocol.pk)
+    if proto_full is None:
+        return None, str(_('Protocol configuration is incomplete.'))
+
+    score, rule, err = run_triage(proto_full, symptom_ids)
+    if err:
+        return None, str(err)
+
+    with transaction.atomic():
+        check = SymptomCheck.objects.create(
+            patient=patient,
+            score=score,
+            recommendation_given=rule.recommendation,
+            performed_by=hw,
+        )
+        check.symptoms_selected.set(
+            Symptom.objects.filter(pk__in=symptom_ids, protocol=protocol)
+        )
+
+    return check, None

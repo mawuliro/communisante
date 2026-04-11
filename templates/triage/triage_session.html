@@ -19,7 +19,10 @@
         {% endfor %}
     {% endif %}
 
-    <form method="post" action="" class="space-y-6">
+    <form method="post" action="" class="space-y-6"
+          data-offline-kind="triage_session"
+          data-offline-protocol-pk="{{ protocol.pk }}"
+          data-offline-patient-pk="{{ patient.pk }}">
         {% csrf_token %}
         {% for category, symptoms in grouped_symptoms.items %}
             <fieldset class="rounded-lg border border-slate-200 bg-white shadow-sm p-4">

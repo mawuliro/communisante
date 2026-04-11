@@ -10,7 +10,8 @@
     <h1 class="text-2xl font-bold text-emerald-800">
         {% if object %}{% trans "Edit patient" %}{% else %}{% trans "New patient" %}{% endif %}
     </h1>
-    <form method="post" novalidate class="space-y-4">
+    <form method="post" novalidate class="space-y-4"
+          {% if object %}data-offline-kind="patient_update" data-offline-patient-pk="{{ object.pk }}"{% else %}data-offline-kind="patient_create"{% endif %}>
         {% csrf_token %}
         {{ form|crispy }}
         <div class="flex flex-col sm:flex-row gap-3 pt-2">

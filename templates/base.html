@@ -1,15 +1,24 @@
-{% load i18n %}
+{% load i18n static %}
 <!DOCTYPE html>
 <html lang="{{ LANGUAGE_CODE|default:'fr' }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#047857">
+    <meta name="csrf-token" content="{{ csrf_token }}">
     <link rel="manifest" href="{% url 'web-manifest' %}">
+    <link rel="apple-touch-icon" href="{% static 'pwa/icon-192.png' %}">
     <title>{% block title %}{% trans "CommuniSanté" %}{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+    <div id="offline-banner" class="bg-amber-500 text-amber-950 text-center text-sm font-medium py-2 px-4" hidden role="status" aria-live="polite" aria-hidden="true">
+        {% trans "Offline mode — forms are saved on this device and sent when you are back online." %}
+        <span id="offline-pending-count" class="ml-2 inline-flex min-w-[1.25rem] justify-center rounded-full bg-amber-800 px-1.5 text-xs text-amber-50" hidden></span>
+    </div>
+    <p id="offline-queued-toast" class="fixed bottom-4 left-1/2 z-50 -translate-x-1/2 max-w-sm rounded-lg bg-slate-900 px-4 py-3 text-center text-sm text-white shadow-lg" hidden role="status">
+        {% trans "Saved locally. It will sync when the connection returns." %}
+    </p>
     <header class="bg-emerald-700 text-white shadow">
         <div class="max-w-3xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-3">
             <a href="{% url 'core:home' %}" class="text-xl font-semibold tracking-tight">
@@ -87,9 +96,12 @@
         {% trans "Community health platform, offline first" %}
     </footer>
     <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('{% url "service-worker" %}').catch(function () {});
-      }
+      window.COMMUNISANTE_PWA = {
+        syncUrl: "{% url 'offline-sync' %}",
+        serviceWorkerUrl: "{% url 'service-worker' %}",
+        csrfToken: "{{ csrf_token }}"
+      };
     </script>
+    <script src="{% static 'js/communisante-pwa.js' %}" defer></script>
 </body>
 </html>

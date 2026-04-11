@@ -8,12 +8,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls.i18n import i18n_patterns
 
+from core.offline_sync import offline_sync_view
 from core.views import health, service_worker, web_manifest
 
 urlpatterns = [
     path('health/', health, name='health'),
     path('health', health),  # no trailing slash — some load balancers omit it
-    path('sw.js', service_worker, name='service-worker'),
+    path('sw.js', service_worker),
+    path('service-worker.js', service_worker, name='service-worker'),
+    path('sync/', offline_sync_view, name='offline-sync'),
     path('manifest.webmanifest', web_manifest, name='web-manifest'),
     path('admin/', admin.site.urls),
     path('i18n/', include('django.conf.urls.i18n')),

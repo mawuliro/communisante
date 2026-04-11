@@ -4,8 +4,6 @@ Triage protocol picker, symptom checklist, and saved check result.
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.db import transaction
-from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.translation import gettext as _
@@ -20,7 +18,7 @@ from triage.services import (
     active_symptoms_for_protocol,
     protocol_with_rules,
     resolve_rule,
-    run_triage,
+    save_symptom_check_from_triage,
 )
 
 
@@ -92,38 +90,22 @@ class TriageSessionView(LoginRequiredMixin, CanUseTriageUiMixin, View):
     def post(self, request, protocol_pk, patient_pk):
         protocol = get_object_or_404(SymptomProtocol, pk=protocol_pk, is_active=True)
         patient = get_object_or_404(patient_queryset_for_user(request.user), pk=patient_pk)
-        hw = health_worker_for_triage(request.user)
         raw_ids = request.POST.getlist('symptom')
         try:
             symptom_ids = [int(x) for x in raw_ids if str(x).strip().isdigit()]
         except (TypeError, ValueError):
             symptom_ids = []
 
-        proto_full = protocol_with_rules(protocol.pk)
-        if proto_full is None:
-            raise Http404
-
-        score, rule, err = run_triage(proto_full, symptom_ids)
         symptoms = active_symptoms_for_protocol(protocol)
         grouped = {}
         for s in symptoms:
             key = s.category or _('General')
             grouped.setdefault(key, []).append(s)
 
+        check, err = save_symptom_check_from_triage(request.user, protocol_pk, patient_pk, symptom_ids)
         if err:
             messages.error(request, err)
             return self._render(request, protocol, patient, grouped, errors=[str(err)])
-
-        with transaction.atomic():
-            check = SymptomCheck.objects.create(
-                patient=patient,
-                score=score,
-                recommendation_given=rule.recommendation,
-                performed_by=hw,
-            )
-            check.symptoms_selected.set(
-                Symptom.objects.filter(pk__in=symptom_ids, protocol=protocol)
-            )
 
         messages.success(request, _('Triage saved.'))
         return redirect('triage:check_detail', pk=check.pk)
