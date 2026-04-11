@@ -1,444 +1,796 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# CommuniSanté — French translations
+# Regenerate: python3 scripts/build_fr_django_po.py
+# Then: msgfmt -o locale/fr/LC_MESSAGES/django.mo locale/fr/LC_MESSAGES/django.po
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: CommuniSanté\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-10 01:24+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2026-04-11 12:00+0000\n"
+"PO-Revision-Date: 2026-04-11 12:00+0000\n"
+"Last-Translator: CommuniSanté <team@communisante.local>\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-#: accounts/admin.py:32 accounts/admin.py:38
+
 msgid "Health Worker Information"
-msgstr ""
+msgstr "Fiche agent de santé"
 
-#: accounts/models.py:17
 msgid "Community Health Worker"
-msgstr ""
+msgstr "Agent de santé communautaire"
 
-#: accounts/models.py:18
 msgid "District Supervisor"
-msgstr ""
+msgstr "Superviseur de district"
 
-#: accounts/models.py:19
 msgid "System Administrator"
-msgstr ""
+msgstr "Administrateur système"
 
-#: accounts/models.py:26
 msgid "role"
-msgstr ""
+msgstr "rôle"
 
-#: accounts/models.py:31
 msgid "phone number"
-msgstr ""
+msgstr "numéro de téléphone"
 
-#: accounts/models.py:34
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
-#: accounts/models.py:35
 msgid "French"
-msgstr ""
+msgstr "Français"
 
-#: accounts/models.py:41
 msgid "preferred language"
-msgstr ""
+msgstr "langue préférée"
 
-#: accounts/models.py:45 accounts/models.py:97
 msgid "user"
-msgstr ""
+msgstr "utilisateur"
 
-#: accounts/models.py:46
 msgid "users"
-msgstr ""
+msgstr "utilisateurs"
 
-#: accounts/models.py:70
 msgid "district name"
-msgstr ""
+msgstr "nom du district"
 
-#: accounts/models.py:71
 msgid "region"
-msgstr ""
+msgstr "région"
 
-#: accounts/models.py:78
 msgid "supervisor"
-msgstr ""
+msgstr "superviseur"
 
-#: accounts/models.py:82 accounts/models.py:103
 msgid "district"
-msgstr ""
+msgstr "district"
 
-#: accounts/models.py:83
 msgid "districts"
-msgstr ""
+msgstr "districts"
 
-#: accounts/models.py:108
 msgid "contact phone"
-msgstr ""
+msgstr "téléphone de contact"
 
-#: accounts/models.py:110 maternal/models.py:47 triage/models.py:20
-#: triage/models.py:43
 msgid "active"
-msgstr ""
+msgstr "actif"
 
-#: accounts/models.py:113
 msgid "health worker"
-msgstr ""
+msgstr "agent de santé"
 
-#: accounts/models.py:114
 msgid "health workers"
-msgstr ""
+msgstr "agents de santé"
 
-#: alerts/models.py:17
 msgid "Missed visit"
-msgstr ""
+msgstr "Visite manquée"
 
-#: alerts/models.py:18
 msgid "Danger sign"
-msgstr ""
+msgstr "Signe de danger"
 
-#: alerts/models.py:19
 msgid "High risk"
-msgstr ""
+msgstr "Risque élevé"
 
-#: alerts/models.py:22 maternal/models.py:26
 msgid "Low"
-msgstr ""
+msgstr "Faible"
 
-#: alerts/models.py:23 maternal/models.py:27
 msgid "Medium"
-msgstr ""
+msgstr "Modéré"
 
-#: alerts/models.py:24 maternal/models.py:28
 msgid "High"
-msgstr ""
+msgstr "Élevé"
 
-#: alerts/models.py:25
 msgid "Critical"
-msgstr ""
+msgstr "Critique"
 
-#: alerts/models.py:30
 msgid "alert type"
-msgstr ""
+msgstr "type d'alerte"
 
-#: alerts/models.py:36
 msgid "related patient"
-msgstr ""
+msgstr "patient concerné"
 
-#: alerts/models.py:44
 msgid "related pregnancy"
-msgstr ""
+msgstr "grossesse concernée"
 
-#: alerts/models.py:49
 msgid "severity"
-msgstr ""
+msgstr "gravité"
 
-#: alerts/models.py:51
 msgid "resolved"
-msgstr ""
+msgstr "résolu"
 
-#: alerts/models.py:58
 msgid "resolved by"
-msgstr ""
+msgstr "résolu par"
 
-#: alerts/models.py:60
 msgid "resolved at"
-msgstr ""
+msgstr "résolu le"
 
-#: alerts/models.py:61 patients/models.py:35
 msgid "created at"
-msgstr ""
+msgstr "créé le"
 
-#: alerts/models.py:62 maternal/models.py:103
 msgid "notes"
-msgstr ""
+msgstr "notes"
 
-#: alerts/models.py:65
 msgid "alert"
-msgstr ""
+msgstr "alerte"
 
-#: alerts/models.py:66
 msgid "alerts"
-msgstr ""
+msgstr "alertes"
 
-#: alerts/models.py:74
-#, python-format
-msgid "%(type)s — %(patient)s"
-msgstr ""
+msgid "%(type)s, %(patient)s"
+msgstr "%(type)s, %(patient)s"
 
-#: maternal/models.py:34 patients/models.py:38 triage/models.py:109
 msgid "patient"
-msgstr ""
+msgstr "patient"
 
-#: maternal/models.py:36
 msgid "last menstrual period"
-msgstr ""
+msgstr "dernières règles"
 
-#: maternal/models.py:39
 msgid "expected delivery date"
-msgstr ""
+msgstr "date prévue d'accouchement"
 
-#: maternal/models.py:45
 msgid "risk level"
-msgstr ""
+msgstr "niveau de risque"
 
-#: maternal/models.py:50
 msgid "pregnancy record"
-msgstr ""
+msgstr "dossier de grossesse"
 
-#: maternal/models.py:51
 msgid "pregnancy records"
-msgstr ""
+msgstr "dossiers de grossesse"
 
-#: maternal/models.py:59
-#, python-format
 msgid "Pregnancy for %(patient)s (EDD %(edd)s)"
-msgstr ""
+msgstr "Grossesse — %(patient)s (DPA %(edd)s)"
 
-#: maternal/models.py:66
 msgid "LMP is required."
-msgstr ""
+msgstr "Les dernières règles sont obligatoires."
 
-#: maternal/models.py:82
 msgid "pregnancy"
-msgstr ""
+msgstr "grossesse"
 
-#: maternal/models.py:84
 msgid "visit date"
-msgstr ""
+msgstr "date de visite"
 
-#: maternal/models.py:88
 msgid "blood pressure (systolic)"
-msgstr ""
+msgstr "tension artérielle (systolique)"
 
-#: maternal/models.py:93
 msgid "blood pressure (diastolic)"
-msgstr ""
+msgstr "tension artérielle (diastolique)"
 
-#: maternal/models.py:100
 msgid "weight (kg)"
-msgstr ""
+msgstr "poids (kg)"
 
-#: maternal/models.py:102
 msgid "symptoms noted"
-msgstr ""
+msgstr "symptômes notés"
 
-#: maternal/models.py:108
 msgid "recorded by"
-msgstr ""
+msgstr "enregistré par"
 
-#: maternal/models.py:112
 msgid "prenatal visit"
-msgstr ""
+msgstr "visite prénatale"
 
-#: maternal/models.py:113
 msgid "prenatal visits"
-msgstr ""
+msgstr "visites prénatales"
 
-#: maternal/models.py:121
-#, python-format
-msgid "Visit on %(date)s — %(patient)s"
-msgstr ""
+msgid "Visit on %(date)s, %(patient)s"
+msgstr "Visite du %(date)s — %(patient)s"
 
-#: patients/models.py:15
 msgid "Female"
-msgstr ""
+msgstr "Féminin"
 
-#: patients/models.py:16
 msgid "Male"
-msgstr ""
+msgstr "Masculin"
 
-#: patients/models.py:17
 msgid "Other / prefer not to say"
-msgstr ""
+msgstr "Autre / préfère ne pas répondre"
 
-#: patients/models.py:19
 msgid "first name"
-msgstr ""
+msgstr "prénom"
 
-#: patients/models.py:20
 msgid "last name"
-msgstr ""
+msgstr "nom"
 
-#: patients/models.py:21
 msgid "age"
-msgstr ""
+msgstr "âge"
 
-#: patients/models.py:26
 msgid "sex"
-msgstr ""
+msgstr "sexe"
 
-#: patients/models.py:28
 msgid "village"
-msgstr ""
+msgstr "village"
 
-#: patients/models.py:33
 msgid "assigned CHW"
-msgstr ""
+msgstr "ASC référent"
 
-#: patients/models.py:39
 msgid "patients"
-msgstr ""
+msgstr "patients"
 
-#: templates/base.html:7 templates/base.html:14 templates/core/home.html:6
-msgid "CommuniSanté"
-msgstr ""
-
-#: templates/base.html:18
-msgid "Admin"
-msgstr ""
-
-#: templates/base.html:23
-msgid "Language"
-msgstr ""
-
-#: templates/base.html:34
-msgid "OK"
-msgstr ""
-
-#: templates/base.html:46
-msgid "Community health platform — offline-first"
-msgstr ""
-
-#: templates/core/home.html:8
-msgid "Lightweight tools for community health workers in rural West Africa."
-msgstr ""
-
-#: templates/core/home.html:13
-msgid "Open admin"
-msgstr ""
-
-#: triage/models.py:17
 msgid "protocol name"
-msgstr ""
+msgstr "nom du protocole"
 
-#: triage/models.py:18
 msgid "description"
-msgstr ""
+msgstr "description"
 
-#: triage/models.py:19
 msgid "version"
-msgstr ""
+msgstr "version"
 
-#: triage/models.py:23
 msgid "symptom protocol"
-msgstr ""
+msgstr "protocole de symptômes"
 
-#: triage/models.py:24
 msgid "symptom protocols"
-msgstr ""
+msgstr "protocoles de symptômes"
 
-#: triage/models.py:38 triage/models.py:69
 msgid "protocol"
-msgstr ""
+msgstr "protocole"
 
-#: triage/models.py:40
 msgid "symptom name"
-msgstr ""
+msgstr "nom du symptôme"
 
-#: triage/models.py:41
 msgid "severity weight"
-msgstr ""
+msgstr "pondération de gravité"
 
-#: triage/models.py:42
 msgid "category"
-msgstr ""
+msgstr "catégorie"
 
-#: triage/models.py:46
 msgid "symptom"
-msgstr ""
+msgstr "symptôme"
 
-#: triage/models.py:47
 msgid "symptoms"
-msgstr ""
+msgstr "symptômes"
 
-#: triage/models.py:61
 msgid "Urgent referral"
-msgstr ""
+msgstr "Orientation urgente"
 
-#: triage/models.py:62
 msgid "Basic treatment"
-msgstr ""
+msgstr "Traitement de base"
 
-#: triage/models.py:63
 msgid "Monitoring"
-msgstr ""
+msgstr "Surveillance"
 
-#: triage/models.py:71
 msgid "minimum score"
-msgstr ""
+msgstr "score minimum"
 
-#: triage/models.py:72
 msgid "maximum score"
-msgstr ""
+msgstr "score maximum"
 
-#: triage/models.py:76
 msgid "recommendation"
-msgstr ""
+msgstr "recommandation"
 
-#: triage/models.py:78
 msgid "explanation"
-msgstr ""
+msgstr "explication"
 
-#: triage/models.py:79
 msgid "next steps"
-msgstr ""
+msgstr "prochaines étapes"
 
-#: triage/models.py:82
 msgid "triage rule"
-msgstr ""
+msgstr "règle de triage"
 
-#: triage/models.py:83
 msgid "triage rules"
-msgstr ""
+msgstr "règles de triage"
 
-#: triage/models.py:90
-#, python-format
-msgid "%(rec)s for %(protocol)s (%(min)s–%(max)s)"
-msgstr ""
+msgid "%(rec)s for %(protocol)s (scores %(min)s to %(max)s)"
+msgstr "%(rec)s — %(protocol)s (scores %(min)s à %(max)s)"
 
-#: triage/models.py:99
 msgid "Minimum score cannot exceed maximum score."
-msgstr ""
+msgstr "Le score minimum ne peut pas dépasser le score maximum."
 
-#: triage/models.py:114
 msgid "symptoms selected"
-msgstr ""
+msgstr "symptômes sélectionnés"
 
-#: triage/models.py:116
 msgid "score"
-msgstr ""
+msgstr "score"
 
-#: triage/models.py:120
 msgid "recommendation given"
-msgstr ""
+msgstr "recommandation donnée"
 
-#: triage/models.py:122
 msgid "date"
-msgstr ""
+msgstr "date"
 
-#: triage/models.py:127
 msgid "performed by"
-msgstr ""
+msgstr "réalisé par"
 
-#: triage/models.py:131
 msgid "symptom check"
-msgstr ""
+msgstr "session de triage"
 
-#: triage/models.py:132
 msgid "symptom checks"
-msgstr ""
+msgstr "sessions de triage"
 
-#: triage/models.py:140
-#, python-format
 msgid "Check for %(patient)s on %(date)s"
-msgstr ""
+msgstr "Triage pour %(patient)s le %(date)s"
+
+msgid "Assigned CHW"
+msgstr "ASC assigné"
+
+msgid "First name"
+msgstr "Prénom"
+
+msgid "Last name"
+msgstr "Nom"
+
+msgid "Age"
+msgstr "Âge"
+
+msgid "Sex"
+msgstr "Sexe"
+
+msgid "Village"
+msgstr "Village"
+
+msgid "Invalid assignee."
+msgstr "Assignation invalide."
+
+msgid "You cannot assign a patient to this health worker."
+msgstr "Vous ne pouvez pas assigner ce patient à cet agent."
+
+msgid "Patient"
+msgstr "Patient"
+
+msgid "Last menstrual period"
+msgstr "Dernières règles"
+
+msgid "Risk level"
+msgstr "Niveau de risque"
+
+msgid "Active pregnancy"
+msgstr "Grossesse active"
+
+msgid "You cannot open a pregnancy for this patient."
+msgstr "Vous ne pouvez pas ouvrir une grossesse pour ce patient."
+
+msgid "Recorded by"
+msgstr "Enregistré par"
+
+msgid "Visit date"
+msgstr "Date de visite"
+
+msgid "Systolic BP"
+msgstr "TA systolique"
+
+msgid "Diastolic BP"
+msgstr "TA diastolique"
+
+msgid "Weight (kg)"
+msgstr "Poids (kg)"
+
+msgid "Symptoms noted"
+msgstr "Symptômes notés"
+
+msgid "Notes"
+msgstr "Notes"
+
+msgid "Invalid recorder."
+msgstr "Enregistreur invalide."
+
+msgid "You cannot attribute this visit to that health worker."
+msgstr "Vous ne pouvez pas attribuer cette visite à cet agent."
+
+msgid "You do not have permission to register or edit patients."
+msgstr "Vous n'avez pas l'autorisation d'enregistrer ou de modifier des patients."
+
+msgid "Patient saved."
+msgstr "Patient enregistré."
+
+msgid "Patient updated."
+msgstr "Patient mis à jour."
+
+msgid "You cannot resolve this alert."
+msgstr "Vous ne pouvez pas résoudre cette alerte."
+
+msgid "Already resolved."
+msgstr "Déjà résolu."
+
+msgid "Alert marked resolved."
+msgstr "Alerte marquée comme résolue."
+
+msgid "You do not have permission to add or change pregnancy records."
+msgstr "Vous n'avez pas l'autorisation d'ajouter ou de modifier des grossesses."
+
+msgid "New pregnancy"
+msgstr "Nouvelle grossesse"
+
+msgid "Pregnancy record saved."
+msgstr "Grossesse enregistrée."
+
+msgid "Edit pregnancy"
+msgstr "Modifier la grossesse"
+
+msgid "Pregnancy record updated."
+msgstr "Grossesse mise à jour."
+
+msgid "Prenatal visit saved."
+msgstr "Visite prénatale enregistrée."
+
+msgid "Triage checks must be saved under a community health worker profile. Ask an administrator to link your account."
+msgstr "Les sessions de triage doivent être enregistrées sous un profil d'agent de santé. Demandez à un administrateur de lier votre compte."
+
+msgid "General"
+msgstr "Général"
+
+msgid "Triage saved."
+msgstr "Triage enregistré."
+
+msgid "You do not have permission to download reports."
+msgstr "Vous n'avez pas l'autorisation de télécharger les rapports."
+
+msgid "Active community health worker profile required."
+msgstr "Un profil d'agent de santé actif est requis."
+
+msgid "Patient not found."
+msgstr "Patient introuvable."
+
+msgid "Protocol not found."
+msgstr "Protocole introuvable."
+
+msgid "Protocol has no rules configured."
+msgstr "Aucune règle n'est configurée pour ce protocole."
+
+msgid "No matching rule."
+msgstr "Aucune règle ne correspond."
+
+msgid "No triage rule matches this score. Ask an administrator to review protocol bands."
+msgstr "Aucune règle ne correspond à ce score. Demandez à un administrateur de vérifier les bandes du protocole."
+
+msgid "CommuniSanté: %(type)s — %(patient)s (%(sev)s)."
+msgstr "CommuniSanté : %(type)s — %(patient)s (%(sev)s)."
+
+msgid "District"
+msgstr "District"
+
+msgid "CHW"
+msgstr "ASC"
+
+msgid "Active pregnancies"
+msgstr "Grossesses actives"
+
+msgid "Open alerts"
+msgstr "Alertes ouvertes"
+
+msgid "Registered"
+msgstr "Enregistré"
+
+msgid "High-risk pregnancies (active register)"
+msgstr "Grossesses à haut risque (registre actif)"
+
+msgid "LMP"
+msgstr "DDR"
+
+msgid "EDD"
+msgstr "DPA"
+
+msgid "Risk"
+msgstr "Risque"
+
+msgid "No high-risk pregnancies in this scope."
+msgstr "Aucune grossesse à haut risque dans ce périmètre."
+
+msgid "CommuniSanté"
+msgstr "CommuniSanté"
+
+msgid "Admin"
+msgstr "Administration"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Community health platform — offline-first"
+msgstr "Plateforme de santé communautaire — pensée hors ligne"
+
+msgid "Community health platform, offline first"
+msgstr "Plateforme de santé communautaire, pensée pour le hors-ligne"
+
+msgid "Lightweight tools for community health workers in rural West Africa."
+msgstr "Des outils légers pour les agents de santé communautaires en Afrique de l'Ouest rurale."
+
+msgid "Open admin"
+msgstr "Ouvrir l'administration"
+
+msgid "Staff admin"
+msgstr "Administration du personnel"
+
+msgid "Dashboard"
+msgstr "Tableau de bord"
+
+msgid "My patients"
+msgstr "Mes patients"
+
+msgid "Alerts"
+msgstr "Alertes"
+
+msgid "Symptom triage"
+msgstr "Triage des symptômes"
+
+msgid "Prenatal care"
+msgstr "Suivi prénatal"
+
+msgid "Log in"
+msgstr "Connexion"
+
+msgid "Log out"
+msgstr "Déconnexion"
+
+msgid "Patients"
+msgstr "Patients"
+
+msgid "Triage"
+msgstr "Triage"
+
+msgid "ANC"
+msgstr "CPN"
+
+msgid "Continue"
+msgstr "Continuer"
+
+msgid "Back to home"
+msgstr "Retour à l'accueil"
+
+msgid "Search"
+msgstr "Rechercher"
+
+msgid "Name or village"
+msgstr "Nom ou village"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "No patients yet."
+msgstr "Aucun patient pour le moment."
+
+msgid "New patient"
+msgstr "Nouveau patient"
+
+msgid "Edit patient"
+msgstr "Modifier le patient"
+
+msgid "Save"
+msgstr "Enregistrer"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Pregnancies"
+msgstr "Grossesses"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "All"
+msgstr "Tous"
+
+msgid "Active only"
+msgstr "Actives seulement"
+
+msgid "Closed"
+msgstr "Clôturée"
+
+msgid "No pregnancy records yet."
+msgstr "Aucune grossesse enregistrée."
+
+msgid "Pregnancy"
+msgstr "Grossesse"
+
+msgid "Prenatal visit"
+msgstr "Visite prénatale"
+
+msgid "Elevated blood pressure"
+msgstr "Tension artérielle élevée"
+
+msgid "Consider urgent assessment or referral according to your district protocol."
+msgstr "Envisagez une évaluation urgente ou une orientation selon le protocole de votre district."
+
+msgid "Date"
+msgstr "Date"
+
+msgid "Blood pressure"
+msgstr "Tension artérielle"
+
+msgid "not set"
+msgstr "non renseigné"
+
+msgid "Weight"
+msgstr "Poids"
+
+msgid "kg"
+msgstr "kg"
+
+msgid "Symptoms"
+msgstr "Symptômes"
+
+msgid "Back to pregnancy"
+msgstr "Retour à la grossesse"
+
+msgid "Triage checklist"
+msgstr "Liste de triage"
+
+msgid "Get recommendation"
+msgstr "Obtenir la recommandation"
+
+msgid "Back"
+msgstr "Retour"
+
+msgid "Status"
+msgstr "Statut"
+
+msgid "Open"
+msgstr "Ouverte"
+
+msgid "Resolved"
+msgstr "Résolue"
+
+msgid "Severity"
+msgstr "Gravité"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Optional note"
+msgstr "Note facultative"
+
+msgid "Mark resolved"
+msgstr "Marquer comme résolu"
+
+msgid "No alerts in this view."
+msgstr "Aucune alerte dans cette vue."
+
+msgid "Triage result"
+msgstr "Résultat du triage"
+
+msgid "Score"
+msgstr "Score"
+
+msgid "Recommendation"
+msgstr "Recommandation"
+
+msgid "Explanation"
+msgstr "Explication"
+
+msgid "Next steps"
+msgstr "Prochaines étapes"
+
+msgid "Protocol text may have changed since this check was saved."
+msgstr "Le protocole a pu changer depuis l'enregistrement de ce triage."
+
+msgid "Signs ticked"
+msgstr "Signes cochés"
+
+msgid "Patient file"
+msgstr "Dossier patient"
+
+msgid "Another triage"
+msgstr "Autre triage"
+
+msgid "Choose a protocol, then select a patient."
+msgstr "Choisissez un protocole, puis un patient."
+
+msgid "Your account needs an active community health worker profile to save a triage session. Supervisors can still review records in the admin."
+msgstr "Un profil d'agent de santé actif est nécessaire pour enregistrer un triage. Les superviseurs peuvent consulter les dossiers dans l'administration."
+
+msgid "No active protocols yet. Run load_demo_triage or add one in the admin."
+msgstr "Aucun protocole actif. Exécutez load_demo_triage ou ajoutez-en un dans l'administration."
+
+msgid "Welcome"
+msgstr "Bienvenue"
+
+msgid "Register patient"
+msgstr "Enregistrer un patient"
+
+msgid "Supervisor overview for your districts."
+msgstr "Vue d'ensemble de vos districts."
+
+msgid "No district is linked to your account yet. Ask an administrator to assign you as supervisor on a district."
+msgstr "Aucun district n'est lié à votre compte. Demandez à un administrateur de vous assigner comme superviseur."
+
+msgid "Patients in scope"
+msgstr "Patients du périmètre"
+
+msgid "Active CHWs"
+msgstr "ASC actifs"
+
+msgid "New patients in the last 7 days"
+msgstr "Nouveaux patients sur 7 jours"
+
+msgid "New patients (7 days)"
+msgstr "Nouveaux patients (7 jours)"
+
+msgid "By district"
+msgstr "Par district"
+
+msgid "CSV"
+msgstr "CSV"
+
+msgid "Export"
+msgstr "Exporter"
+
+msgid "Download CSV (district activity)"
+msgstr "Télécharger le CSV (activité par district)"
+
+msgid "Download PDF (high-risk pregnancies)"
+msgstr "Télécharger le PDF (grossesses à haut risque)"
+
+msgid "Download CSV (all patients)"
+msgstr "Télécharger le CSV (tous les patients)"
+
+msgid "Administrator overview."
+msgstr "Vue d'ensemble administrateur."
+
+msgid "Districts"
+msgstr "Districts"
+
+msgid "Admins: add ?district=&lt;id&gt; to the CSV URL to filter one district (IDs from the admin site)."
+msgstr "Admins : ajoutez ?district=&lt;id&gt; à l'URL du CSV pour un district (identifiants dans l'admin)."
+
+msgid "Your account does not have a dashboard role yet. Use the admin site or ask for a CHW or supervisor profile."
+msgstr "Votre compte n'a pas encore de rôle tableau de bord. Utilisez l'administration ou demandez un profil ASC ou superviseur."
+
+msgid "Open patient file"
+msgstr "Ouvrir le dossier patient"
+
+msgid "Expected delivery"
+msgstr "Accouchement prévu"
+
+msgid "Active"
+msgstr "Active"
+
+msgid "Log prenatal visit"
+msgstr "Saisir une visite prénatale"
+
+msgid "Back to list"
+msgstr "Retour à la liste"
+
+msgid "Blood pressure follow up"
+msgstr "Suivi de la tension artérielle"
+
+msgid "One or more visits recorded high blood pressure. Arrange referral per local ANC guidelines."
+msgstr "Une ou plusieurs visites ont noté une tension élevée. Organisez une orientation selon les directives locales de CPN."
+
+msgid "Prenatal visits"
+msgstr "Visites prénatales"
+
+msgid "BP"
+msgstr "TA"
+
+msgid "No visits logged yet."
+msgstr "Aucune visite enregistrée."
+
+msgid "Edit"
+msgstr "Modifier"
+
+msgid "Run triage"
+msgstr "Lancer le triage"
+
+msgid "Choose patient"
+msgstr "Choisir un patient"
+
+msgid "Choose a patient"
+msgstr "Choisir un patient"
+
+msgid "You need an active community health worker profile to open the checklist."
+msgstr "Un profil d'agent de santé actif est nécessaire pour ouvrir la liste."
+
+msgid "No patients available. Register a patient first."
+msgstr "Aucun patient disponible. Enregistrez d'abord un patient."
+
+msgid "Back to protocols"
+msgstr "Retour aux protocoles"
+
+msgid "closed"
+msgstr "clôturée"
